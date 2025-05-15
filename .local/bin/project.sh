@@ -1,8 +1,6 @@
 
 #!/bin/bash
 
-# Usage: ./make_py_project.sh project_name
-
 NAME=$1
 DIR=~/Projects/$NAME
 
