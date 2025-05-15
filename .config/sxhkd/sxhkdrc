@@ -1,0 +1,39 @@
+
+# Take screenshot
+shift + super + s
+    flameshot gui -p ~/Pictures && xclip -selection clipboard -t image/png -i "$(ls -t ~/Pictures | grep '.png' | sed -n 1p | sed "s|^|$HOME/Pictures/|")"
+
+# Lock and Sleep
+super + l
+    slock & systemctl suspend
+
+# Full screenshot
+Print
+    flameshot full -p ~/Pictures && xclip -selection clipboard -t image/png -i "$(ls -t ~/Pictures/*.png | head -n1)"
+    
+# Increase volume
+XF86AudioRaiseVolume
+    pamixer -i 5
+
+# Decrease volume
+XF86AudioLowerVolume
+    pamixer -d 5
+
+# Toggle mute
+XF86AudioMute
+    pamixer -t
+
+# Open dmenu
+alt + p
+    dmenu_run
+
+# Increase brightness
+XF86MonBrightnessUp
+    brightnessctl set +10%
+
+# Decrease brightness
+XF86MonBrightnessDown
+    brightnessctl set 10%-
+
+
+
