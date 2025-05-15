@@ -1,15 +1,10 @@
 
 # ~/.zshrc
 
-# X display for WSL on Windows
-# export DISPLAY=$(ip route | awk '/^default/ {print $3}'):0
-
 # Only auto-start tmux if we're on a local terminal (not SSH)
 if [ -z "$TMUX" ] && [ -z "$SSH_CONNECTION" ]; then
   tmux attach-session -t default || tmux new -s default
 fi
-
-
 
 # Load colors
 autoload -Uz colors && colors
@@ -97,7 +92,6 @@ alias h='z ~ && ll'
 alias p='cd ~/Projects/'
 alias open='xdg-open'
 alias sleepp='slock & systemctl suspend'
-alias server='ssh trietsever@100.65.249.113'
 
 # Options
 
@@ -178,3 +172,6 @@ clean() {
 
 # Print out cat
 neofetch
+
+
+
