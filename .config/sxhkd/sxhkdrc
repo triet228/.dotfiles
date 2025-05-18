@@ -1,7 +1,11 @@
 
 # Take screenshot
+# shift + super + s
+#     flameshot gui -p ~/Pictures && xclip -selection clipboard -t image/png -i "$(ls -t ~/Pictures | grep '.png' | sed -n 1p | sed "s|^|$HOME/Pictures/|")"
+# 
 shift + super + s
-    flameshot gui -p ~/Pictures && xclip -selection clipboard -t image/png -i "$(ls -t ~/Pictures | grep '.png' | sed -n 1p | sed "s|^|$HOME/Pictures/|")"
+    flameshot gui -p ~/Pictures && latest=$(find ~/Pictures -type f -name '*.png' -printf '%T@ %p\n' | sort -nr | head -n1 | cut -d' ' -f2-) && i=1 && while [ -e "$HOME/Pictures/picture$i.png" ]; do i=$((i+1)); done && mv "$latest" "$HOME/Pictures/picture$i.png" && xclip -selection clipboard -t image/png -i "$HOME/Pictures/picture$i.png"
+
 
 # Lock and Sleep
 super + l
