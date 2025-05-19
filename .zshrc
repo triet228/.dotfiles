@@ -93,7 +93,6 @@ alias c='z ~/Data/CLASSES && ls'
 alias yy='pwd | tr -d "\n" | xclip -selection clipboard'
 alias h='z ~ && ll'
 alias p='cd ~/Projects/'
-alias open='xdg-open'
 alias sleepp='slock & systemctl suspend'
 
 # Options
@@ -118,6 +117,11 @@ eval "$(zoxide init zsh)"
 eval "$(direnv hook zsh)"
 
 # Functions
+
+# General function to open file
+open() {
+  xdg-open "$@" >/dev/null 2>&1 &
+}
 
 # Open last directory in lf
 lff() {
