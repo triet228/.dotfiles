@@ -8,7 +8,9 @@ let &t_EI = "\e[6 q"   " Normal mode
 " Use system clipboard for copy, cut, paste
 vnoremap <C-c> "+y   " Ctrl+c to copy visual selection to clipboard
 vnoremap <C-x> "+d   " Ctrl+x to cut visual selection to clipboard
-nnoremap <F5> :w<CR>:!tectonic %<CR> 
+nnoremap <F5> <Esc>:w<CR>:!tectonic % <CR> <CR>
+inoremap <F5> <Esc>:w<CR>:!tectonic % <CR> <CR>
+
 
 " Disable creation of swap files
 set noswapfile
