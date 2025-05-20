@@ -171,11 +171,12 @@ clean() {
   sudo paccache -rk1
   sudo rm -rf ~/Downloads/*
   sudo rm -rf ~/Pictures/*
-  bash -O extglob -c 'rm -rf ~/.cache/!(keepassxc)'
+  bash -O extglob -c 'rm -rf ~/.cache/!(keepassxc|Tectonic)'
   sudo rm -rf /tmp/*
   clear
   neofetch
 }
+
 
 # Print out cat
 neofetch
