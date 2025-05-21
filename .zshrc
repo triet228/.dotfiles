@@ -174,7 +174,6 @@ clean() {
   bash -O extglob -c 'rm -rf ~/.cache/!(keepassxc|Tectonic)'
   sudo rm -rf /tmp/*
   git --git-dir=$HOME/.dotfiles/.git --work-tree=$HOME/.dotfiles pull
-  sleep 3
   clear
   neofetch
 }
