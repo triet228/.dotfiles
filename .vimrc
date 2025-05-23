@@ -1,39 +1,45 @@
-" Load Vim defaults with enhancements
-" /usr/share/vim/vim91/vimrc_example.vim
-source $VIMRUNTIME/vimrc_example.vim
+" ------------------------------
+" Global settings (all filetypes)
+" ------------------------------
 
-" I-beam in insert mode and block beam in normal mode
-let &t_SI = "\e[6 q"   " Insert mode
-let &t_EI = "\e[2 q"   " Normal mode
-
-" Use system clipboard for copy, cut, paste
-vnoremap <C-c> "+y   " Ctrl+c to copy visual selection to clipboard
-vnoremap <C-x> "+d   " Ctrl+x to cut visual selection to clipboard
-nnoremap <F5> <Esc>:w<CR>:!tectonic % <CR> <CR>
-inoremap <F5> <Esc>:w<CR>:!tectonic % <CR> <CR>
-
-" Disable creation of swap files
-set noswapfile
+" Enable syntax
+syntax enable
 
 " Theme
 colorscheme torte 
 
+" Finding files in sub directories :find <file> <tab>
+set path+=**
 
+" Autocomplete in insert mode
+" Autocomplete same file: Ctrl + P
+" Autocomplete directory: Ctrl + x then Ctrl + f
 
-" ------------------------------
-" Global settings (all filetypes)
-" ------------------------------
-set textwidth=78
+" Cursor beam 
+let &t_SI = "\e[6 q"   " I in insert mode
+let &t_EI = "\e[2 q"   " Block in normal mode
+
+" Use system clipboard for copy and cut 
+vnoremap <C-c> "+y   " Ctrl+c to copy visual selection to clipboard
+vnoremap <C-x> "+d   " Ctrl+x to cut visual selection to clipboard
+
+" Disable swap files
+set noswapfile
+
+" Set line number
 set number
 set relativenumber
-match ErrorMsg '\%>78v.\+'
 
 " ------------------------------
 " LaTeX-specific settings
 " ------------------------------
 augroup latex_settings
   autocmd!
+  
+  " line break at words instead of char
   autocmd FileType tex setlocal linebreak
+
+  " move visually instead of by line
   autocmd FileType tex nnoremap <buffer> j gj
   autocmd FileType tex nnoremap <buffer> k gk
   autocmd FileType tex nnoremap <buffer> 0 g0
@@ -44,9 +50,20 @@ augroup latex_settings
   autocmd FileType tex vnoremap <buffer> 0 g0
   autocmd FileType tex vnoremap <buffer> ^ g^
   autocmd FileType tex vnoremap <buffer> $ g$
-  " Optional: disable LaTeX indenting
-  " autocmd FileType tex setlocal noautoindent nosmartindent nocindent indentexpr=
-  " let g:did_indent_tex = 1
+
+  " Ctrl + S to compile Latex
+  nnoremap <C-s> <Esc>:w<CR>:!tectonic % <CR> <CR>
+  inoremap <C-s> <Esc>:w<CR>:!tectonic % <CR> <CR>
+  
 augroup END
 
+" ------------------------------
+" Python-specific settings
+" ------------------------------
+augroup python_settings
+  autocmd!
+  autocmd FileType python set textwidth=78
+  autocmd FileType python match ErrorMsg '\%>78v.\+'
+augroup END
 
+ 
