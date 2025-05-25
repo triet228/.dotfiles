@@ -43,8 +43,8 @@ augroup latex_settings
   " line break at words instead of char
   autocmd FileType tex setlocal linebreak
 
-  " no indent for latex file
-  autocmd FileType tex setlocal noautoindent nosmartindent nocindent
+  " Completely disable auto indentation for LaTeX
+  autocmd FileType tex setlocal noautoindent nosmartindent nocindent indentexpr=
 
   " move visually instead of by line
   autocmd FileType tex nnoremap <buffer> j gj
