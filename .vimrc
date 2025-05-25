@@ -2,18 +2,15 @@
 " Global settings (all filetypes)
 " ------------------------------
 
-" Enable syntax
-syntax enable
+" Get the defaults that most users want.
+" /usr/share/vim/vim91/defaults.vim
+source $VIMRUNTIME/defaults.vim
 
 " Theme
 colorscheme torte 
 
 " Finding files in sub directories :find <file> <tab>
 set path+=**
-
-" Autocomplete in insert mode
-" Autocomplete same file: Ctrl + P
-" Autocomplete directory: Ctrl + x then Ctrl + f
 
 " Cursor beam 
 let &t_SI = "\e[6 q"   " I in insert mode
@@ -23,12 +20,11 @@ let &t_EI = "\e[2 q"   " Block in normal mode
 vnoremap <C-c> "+y   " Ctrl+c to copy visual selection to clipboard
 vnoremap <C-x> "+d   " Ctrl+x to cut visual selection to clipboard
 
-" Disable swap files
-set noswapfile
-
 " Set line number
 set number
-set relativenumber
+
+" Tab autocomplete
+inoremap <expr> <Tab> col('.') > 1 ? "\<C-P>" : "\<Tab>"
 
 " ------------------------------
 " LaTeX-specific settings
@@ -69,4 +65,4 @@ augroup python_settings
 
 augroup END
 
- 
+
