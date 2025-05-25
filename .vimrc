@@ -30,6 +30,10 @@ set smartcase
 " Tab autocomplete
 inoremap <expr> <Tab> col('.') > 1 ? "\<C-P>" : "\<Tab>"
 
+" Tab to 4 space
+set tabstop=4
+set shiftwidth=4
+
 " ------------------------------
 " LaTeX-specific settings
 " ------------------------------
@@ -38,6 +42,9 @@ augroup latex_settings
   
   " line break at words instead of char
   autocmd FileType tex setlocal linebreak
+
+  " no indent for latex file
+  autocmd FileType tex setlocal noautoindent nosmartindent nocindent
 
   " move visually instead of by line
   autocmd FileType tex nnoremap <buffer> j gj
