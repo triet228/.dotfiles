@@ -23,6 +23,10 @@ vnoremap <C-x> "+d   " Ctrl+x to cut visual selection to clipboard
 " Set line number
 set number
 
+" Ignore case when searching except when there is uppercase
+set ignorecase
+set smartcase
+
 " Tab autocomplete
 inoremap <expr> <Tab> col('.') > 1 ? "\<C-P>" : "\<Tab>"
 
