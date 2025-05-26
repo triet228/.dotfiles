@@ -49,7 +49,10 @@ augroup latex_settings
 
   " autocomplete from common English words
   autocmd FileType tex setlocal complete+=k~/.vim/keywords.txt
-  
+ 
+  " spell check
+  autocmd FileType tex setlocal spell spelllang=en_us
+
   " move visually instead of by line
   autocmd FileType tex nnoremap <buffer> j gj
   autocmd FileType tex nnoremap <buffer> k gk
@@ -63,8 +66,9 @@ augroup latex_settings
   autocmd FileType tex vnoremap <buffer> $ g$
 
   " Ctrl + S to compile Latex
-  autocmd FileType tex nnoremap <C-s> <Esc>:w<CR>:!tectonic % <CR> <CR>
-  autocmd FileType tex inoremap <C-s> <Esc>:w<CR>:!tectonic % <CR> <CR> 
+"  autocmd FileType tex nnoremap <C-s> <Esc>:w<CR>:!tectonic % <CR> <CR>
+  autocmd FileType tex inoremap <buffer> <C-s> <Esc> :w \| !tectonic % <CR>i
+  autocmd FileType tex nnoremap <buffer> <C-s> :w \| !tectonic %<CR><CR>
 
 augroup END
 
