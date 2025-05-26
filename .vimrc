@@ -22,6 +22,7 @@ vnoremap <C-x> "+d   " Ctrl+x to cut visual selection to clipboard
 
 " Set line number
 set number
+set relativenumber
 
 " Ignore case when searching except when there is uppercase
 set ignorecase
