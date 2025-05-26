@@ -35,6 +35,16 @@ inoremap <expr> <Tab> col('.') > 1 ? "\<C-N>" : "\<Tab>"
 set tabstop=4
 set shiftwidth=4
 
+" Disable arrow keys
+noremap   <Up>    <Nop>
+noremap   <Down>  <Nop>
+noremap   <Left>  <Nop>
+noremap   <Right> <Nop>
+inoremap  <Up>    <Nop>
+inoremap  <Down>  <Nop>
+inoremap  <Left>  <Nop>
+inoremap  <Right> <Nop>
+
 " ------------------------------
 " LaTeX-specific settings
 " ------------------------------
@@ -54,21 +64,15 @@ augroup latex_settings
   autocmd FileType tex setlocal spell spelllang=en_us
 
   " move visually instead of by line
-  autocmd FileType tex nnoremap <buffer> j gj
-  autocmd FileType tex nnoremap <buffer> k gk
-  autocmd FileType tex nnoremap <buffer> 0 g0
-  autocmd FileType tex nnoremap <buffer> ^ g^
-  autocmd FileType tex nnoremap <buffer> $ g$
-  autocmd FileType tex vnoremap <buffer> j gj
-  autocmd FileType tex vnoremap <buffer> k gk
-  autocmd FileType tex vnoremap <buffer> 0 g0
-  autocmd FileType tex vnoremap <buffer> ^ g^
-  autocmd FileType tex vnoremap <buffer> $ g$
+  autocmd FileType tex noremap <buffer> j gj
+  autocmd FileType tex noremap <buffer> k gk
+  autocmd FileType tex noremap <buffer> 0 g0
+  autocmd FileType tex noremap <buffer> ^ g^
+  autocmd FileType tex noremap <buffer> $ g$
 
   " Ctrl + S to compile Latex
-"  autocmd FileType tex nnoremap <C-s> <Esc>:w<CR>:!tectonic % <CR> <CR>
   autocmd FileType tex inoremap <buffer> <C-s> <Esc> :w \| !tectonic % <CR>i
-  autocmd FileType tex nnoremap <buffer> <C-s> :w \| !tectonic %<CR><CR>
+  autocmd FileType tex nnoremap <buffer> <C-s> <Esc> :w \| !tectonic % <CR>i<Esc>
 
 augroup END
 
