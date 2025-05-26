@@ -6,6 +6,9 @@
 " /usr/share/vim/vim91/defaults.vim
 source $VIMRUNTIME/defaults.vim
 
+" No temp file
+set noswapfile
+
 " Theme
 colorscheme torte 
 
@@ -17,8 +20,7 @@ let &t_SI = "\e[6 q"   " I in insert mode
 let &t_EI = "\e[2 q"   " Block in normal mode
 
 " Use system clipboard for copy and cut 
-vnoremap <C-c> "+y   " Ctrl+c to copy visual selection to clipboard
-vnoremap <C-x> "+d   " Ctrl+x to cut visual selection to clipboard
+set clipboard=unnamedplus
 
 " Set line number
 set number
@@ -62,6 +64,9 @@ augroup latex_settings
  
   " spell check
   autocmd FileType tex setlocal spell spelllang=en_us
+  
+  " tab to autocorrect
+  autocmd FileType tex noremap <buffer> <Tab> 1z=
 
   " move visually instead of by line
   autocmd FileType tex noremap <buffer> j gj
@@ -71,8 +76,8 @@ augroup latex_settings
   autocmd FileType tex noremap <buffer> $ g$
 
   " Ctrl + S to compile Latex
-  autocmd FileType tex inoremap <buffer> <C-s> <Esc> :w \| !tectonic % <CR>i
-  autocmd FileType tex nnoremap <buffer> <C-s> <Esc> :w \| !tectonic % <CR>i<Esc>
+  autocmd FileType tex inoremap <buffer> <C-s> <Esc> :w \| !tectonic % <CR><BS>a
+  autocmd FileType tex nnoremap <buffer> <C-s> <Esc> :w \| !tectonic % <CR><BS>
 
 augroup END
 
