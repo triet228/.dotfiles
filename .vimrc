@@ -28,7 +28,7 @@ set ignorecase
 set smartcase
 
 " Tab autocomplete
-inoremap <expr> <Tab> col('.') > 1 ? "\<C-P>" : "\<Tab>"
+inoremap <expr> <Tab> col('.') > 1 ? "\<C-N>" : "\<Tab>"
 
 " Tab to 4 space
 set tabstop=4
@@ -43,9 +43,12 @@ augroup latex_settings
   " line break at words instead of char
   autocmd FileType tex setlocal linebreak
 
-  " Completely disable auto indentation for LaTeX
+  " completely disable auto indentation for LaTeX
   autocmd FileType tex setlocal noautoindent nosmartindent nocindent indentexpr=
 
+  " autocomplete from common English words
+  autocmd FileType tex setlocal complete+=k~/.vim/keywords.txt
+  
   " move visually instead of by line
   autocmd FileType tex nnoremap <buffer> j gj
   autocmd FileType tex nnoremap <buffer> k gk
@@ -59,9 +62,9 @@ augroup latex_settings
   autocmd FileType tex vnoremap <buffer> $ g$
 
   " Ctrl + S to compile Latex
-  nnoremap <C-s> <Esc>:w<CR>:!tectonic % <CR> <CR>
-  inoremap <C-s> <Esc>:w<CR>:!tectonic % <CR> <CR>
-  
+  autocmd FileType tex nnoremap <C-s> <Esc>:w<CR>:!tectonic % <CR> <CR>
+  autocmd FileType tex inoremap <C-s> <Esc>:w<CR>:!tectonic % <CR> <CR> 
+
 augroup END
 
 " ------------------------------
