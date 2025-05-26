@@ -26,6 +26,14 @@ set clipboard=unnamedplus
 set number
 set relativenumber
 
+" Set highlight when searching
+set hlsearch
+
+" Bind <C-n> to remove search highlight
+nnoremap <C-h> :nohlsearch<CR>
+vnoremap <C-h> :nohlsearch<CR>
+inoremap <C-h> <C-o>:nohlsearch<CR>
+
 " Ignore case when searching except when there is uppercase
 set ignorecase
 set smartcase
@@ -37,6 +45,9 @@ inoremap <expr> <Tab> col('.') > 1 ? "\<C-N>" : "\<Tab>"
 set tabstop=4
 set shiftwidth=4
 
+
+" Use for training purpose
+
 " Disable arrow keys
 noremap   <Up>    <Nop>
 noremap   <Down>  <Nop>
@@ -46,6 +57,9 @@ inoremap  <Up>    <Nop>
 inoremap  <Down>  <Nop>
 inoremap  <Left>  <Nop>
 inoremap  <Right> <Nop>
+
+" Disable mouse
+set mouse=
 
 " ------------------------------
 " LaTeX-specific settings
