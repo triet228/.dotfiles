@@ -29,7 +29,7 @@ set relativenumber
 " Set highlight when searching
 set hlsearch
 
-" Bind <C-n> to remove search highlight
+" Bind <C-h> to remove search highlight
 nnoremap <C-h> :nohlsearch<CR>
 vnoremap <C-h> :nohlsearch<CR>
 inoremap <C-h> <C-o>:nohlsearch<CR>
@@ -79,7 +79,7 @@ augroup latex_settings
   " spell check
   autocmd FileType tex setlocal spell spelllang=en_us
   
-  " tab to autocorrect
+  " tab to accept spell check
   autocmd FileType tex noremap <buffer> <Tab> 1z=
 
   " move visually instead of by line
