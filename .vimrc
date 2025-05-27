@@ -24,6 +24,12 @@ set clipboard=unnamedplus
 noremap <C-c> y
 noremap <C-v> p
 
+" Persistent undo
+set undofile
+set undodir=~/.vim/undodir
+set undolevels=10000
+set undoreload=10000
+
 " Set line number
 set number
 set relativenumber
@@ -62,6 +68,9 @@ inoremap  <Right> <Nop>
 
 " Disable mouse
 set mouse=
+
+
+
 
 " ------------------------------
 " LaTeX-specific settings
