@@ -22,7 +22,6 @@ let &t_EI = "\e[2 q"   " Block in normal mode
 " Use system clipboard for copy and cut 
 set clipboard=unnamedplus
 noremap <C-c> y`>
-noremap <C-v> p
 noremap y y`>
 
 " Persistent undo
@@ -106,6 +105,26 @@ augroup latex_settings
   autocmd FileType tex nnoremap <buffer> <C-s> <Esc> :w \| !tectonic % <CR><BS>
 
 augroup END
+
+
+" ------------------------------
+" Text-specific settings
+" ------------------------------
+augroup text_settings
+  autocmd!
+
+  autocmd FileType text setlocal linebreak
+  autocmd FileType text setlocal complete+=k~/.vim/keywords.txt
+  autocmd FileType text setlocal spell spelllang=en_us
+  autocmd FileType text noremap <buffer> <Tab> 1z=
+  autocmd FileType text noremap <buffer> j gj
+  autocmd FileType text noremap <buffer> k gk
+  autocmd FileType text noremap <buffer> 0 g0
+  autocmd FileType text noremap <buffer> ^ g^
+  autocmd FileType text noremap <buffer> $ g$
+
+augroup END
+
 
 " ------------------------------
 " Python-specific settings
