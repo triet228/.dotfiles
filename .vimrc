@@ -53,6 +53,8 @@ inoremap <expr> <Tab> col('.') > 1 ? "\<C-N>" : "\<Tab>"
 set tabstop=4
 set shiftwidth=4
 
+" Toggle spell check 
+nnoremap <F5> :set spell!<CR>
 
 " Use for training purpose
 
