@@ -2,7 +2,7 @@ setxkbmap -option caps:swapescape &
 sxhkd &
 autorandr --change &
 sudo systemctl start tailscaled &
-st & 
+kitty & 
 firefox & 
 slstatus &
 keepassxc &
