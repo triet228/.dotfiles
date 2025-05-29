@@ -4,11 +4,6 @@
 # Switch caps and escape key
 setxkbmap -option caps:swapescape
 
-# Only auto-start tmux if we're on a local terminal (not SSH)
-if [ -z "$TMUX" ] && [ -z "$SSH_CONNECTION" ]; then
-  tmux attach-session -t default || tmux new -s default
-fi
-
 # Load colors
 autoload -Uz colors && colors
 
@@ -94,6 +89,7 @@ alias yy='pwd | tr -d "\n" | xclip -selection clipboard'
 alias h='z ~ && ll'
 alias p='cd ~/Projects/'
 alias sleepp='slock & systemctl suspend'
+alias cpd='cp -t ~/Downloads'
 
 # Options
 
