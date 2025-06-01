@@ -24,6 +24,11 @@ set clipboard=unnamedplus
 vnoremap <C-c> y`>
 vnoremap y y`>
 
+" Remap delete commands to use black hole register
+nnoremap d "_d
+nnoremap dd "_dd
+nnoremap x "_x
+
 " Persistent undo
 set undofile
 set undodir=~/.vim/undodir
@@ -55,6 +60,9 @@ set shiftwidth=4
 
 " Toggle spell check 
 nnoremap <F5> :set spell!<CR>
+
+
+
 
 " Use for training purpose
 
