@@ -28,6 +28,7 @@ vnoremap y y`>
 nnoremap d "_d
 nnoremap dd "_dd
 nnoremap x "_x
+nnoremap cw "_cw
 
 " Persistent undo
 set undofile
