@@ -21,8 +21,8 @@ let &t_EI = "\e[2 q"   " Block in normal mode
 
 " Use system clipboard for copy and cut 
 set clipboard=unnamedplus
-noremap <C-c> y`>
-noremap y y`>
+vnoremap <C-c> y`>
+vnoremap y y`>
 
 " Persistent undo
 set undofile
