@@ -23,6 +23,8 @@ let &t_EI = "\e[2 q"   " Block in normal mode
 set clipboard=unnamedplus
 vnoremap <C-c> y`>
 vnoremap y y`>
+vnoremap <C-x> d
+
 
 " Remap delete commands to use black hole register
 nnoremap d "_d
@@ -102,7 +104,7 @@ augroup latex_settings
   autocmd FileType tex setlocal spell spelllang=en_us
   
   " tab to accept spell check
-  autocmd FileType tex noremap <buffer> <Tab> 1z=
+  autocmd filetype tex noremap <buffer> <tab> 1z=lw
 
   " move visually instead of by line
   autocmd FileType tex noremap <buffer> j gj
