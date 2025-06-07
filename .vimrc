@@ -25,7 +25,6 @@ vnoremap <C-c> y`>
 vnoremap y y`>
 vnoremap <C-x> d
 
-
 " Remap delete commands to use black hole register
 nnoremap d "_d
 nnoremap dd "_dd
@@ -62,11 +61,11 @@ set tabstop=4
 set shiftwidth=4
 set expandtab
 
-
 " Toggle spell check 
 nnoremap <F5> :set spell!<CR>
 
-
+" No error sound when hitting boundary
+set belloff=all
 
 
 " Use for training purpose
