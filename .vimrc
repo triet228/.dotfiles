@@ -60,6 +60,8 @@ inoremap <expr> <Tab> col('.') > 1 ? "\<C-N>" : "\<Tab>"
 " Tab to 4 space
 set tabstop=4
 set shiftwidth=4
+set expandtab
+
 
 " Toggle spell check 
 nnoremap <F5> :set spell!<CR>
