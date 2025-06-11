@@ -39,5 +39,7 @@ XF86MonBrightnessUp
 XF86MonBrightnessDown
     brightnessctl set 10%-
 
-
+# Find mouse
+F2
+    find-cursor --size 320 --distance 40 --wait 400 --line-width 4 --color red
 
