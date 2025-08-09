@@ -144,7 +144,7 @@ command_not_found_handler() {
 
 # Auto tree after cd
 cd() {
-    z "$@" && lss
+    z "$@" && ls
 }
 
 # Blank line before prompt
