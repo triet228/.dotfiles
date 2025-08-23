@@ -102,9 +102,6 @@ augroup latex_settings
 
   " autocomplete from common English words
   autocmd FileType tex setlocal complete+=k~/.vim/keywords.txt
- 
-  " spell check
-  autocmd FileType tex setlocal spell spelllang=en_us
   
   " tab to accept spell check
   autocmd filetype tex noremap <buffer> <tab> 1z=lw
@@ -131,7 +128,6 @@ augroup text_settings
 
   autocmd FileType text setlocal linebreak
   autocmd FileType text setlocal complete+=k~/.vim/keywords.txt
-  autocmd FileType text setlocal spell spelllang=en_us
   autocmd FileType text noremap <buffer> <Tab> 1z=
   autocmd FileType text noremap <buffer> j gj
   autocmd FileType text noremap <buffer> k gk

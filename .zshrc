@@ -92,7 +92,7 @@ alias sleepp='slock & systemctl suspend'
 alias cpd='cp -t ~/Downloads'
 alias icat='kitty +kitten icat'
 alias math='qalc'
-
+alias update='yay -Syu --noconfirm'
 
 # Options
 
