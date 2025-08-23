@@ -134,7 +134,7 @@ augroup text_settings
   autocmd FileType text noremap <buffer> 0 g0
   autocmd FileType text noremap <buffer> ^ g^
   autocmd FileType text noremap <buffer> $ g$
-
+  autocmd FileType text noremap <buffer> <C-s> :w <CR>
 augroup END
 
 
