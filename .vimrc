@@ -126,6 +126,7 @@ augroup END
 augroup text_settings
   autocmd!
 
+  autocmd FileType text set filetype=markdown
   autocmd FileType text setlocal linebreak
   autocmd FileType text setlocal complete+=k~/.vim/keywords.txt
   autocmd FileType text noremap <buffer> <Tab> 1z=
