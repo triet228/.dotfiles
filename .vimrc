@@ -149,8 +149,11 @@ augroup python_settings
   autocmd FileType python set textwidth=78
   autocmd FileType python match ErrorMsg '\%>78v.\+'
 
-  " Run python with F5 or Ctrl + S
-  autocmd FileType python noremap <buffer> <C-s> :w! \| !python -i % <CR>
+  " Ctrl S to save file
+  autocmd FileType python noremap <buffer> <C-s> :w <CR>
+
+  " Run python with F5 
+  " autocmd FileType python noremap <buffer> <C-s> :w! \| !python -i % <CR>
   autocmd FileType python noremap <buffer> <F5> :w! \| !python % <CR>
 augroup END
 
