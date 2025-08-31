@@ -2,7 +2,7 @@
 #!/bin/bash
 
 NAME=$1
-DIR=~/Projects/$NAME
+DIR=./$NAME
 
 mkdir -p "$DIR"
 cd "$DIR" || exit
