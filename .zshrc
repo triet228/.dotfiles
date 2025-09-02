@@ -177,6 +177,8 @@ clean() {
   neofetch
 }
 
+# Initialize pyenv - python version control
+eval "$(pyenv init -)"
 
 # Print out cat
 neofetch

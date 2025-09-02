@@ -9,4 +9,5 @@ slstatus &
 keepassxc &
 ferdium &
 sudo systemctl restart tailscaled &
+xset -b
 exec dwm
