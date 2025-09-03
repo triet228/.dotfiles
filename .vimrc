@@ -157,7 +157,25 @@ augroup python_settings
   autocmd FileType python noremap <buffer> <F5> :w! \| !python % <CR> <CR>
 augroup END
 
+" ------------------------------
+" C++-specific settings
+" ------------------------------
+augroup cpp_settings
+  autocmd!
 
+  " Enable C-style indentation
+  autocmd FileType cpp,c setlocal cindent smartindent
+
+  " Limit code at 80 characters length
+  autocmd FileType cpp,c set textwidth=78
+  autocmd FileType cpp,c match ErrorMsg '\%>78v.\+'
+
+  " Ctrl S to save file
+  autocmd FileType cpp,c noremap <buffer> <C-s> :w <CR>
+
+  " Compile and run C++ code with F5
+  autocmd FileType cpp,c nnoremap <buffer> <F5> :w <bar> !g++ % && ./a.out <CR>
+augroup END
 
 
 
