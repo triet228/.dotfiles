@@ -54,7 +54,7 @@ set ignorecase
 set smartcase
 
 " Tab autocomplete
-inoremap <expr> <Tab> col('.') > 1 ? "\<C-N>" : "\<Tab>"
+" inoremap <expr> <Tab> col('.') > 1 ? "\<C-N>" : "\<Tab>"
 
 " Tab to 4 space
 set tabstop=4
