@@ -27,7 +27,7 @@ vnoremap <C-x> d
 
 " Remap delete commands to use black hole register
 nnoremap d "_d
-nnoremap dd "_dd
+" nnoremap dd "_dd
 nnoremap x "_x
 nnoremap cw "_cw
 
@@ -54,7 +54,7 @@ set ignorecase
 set smartcase
 
 " Tab autocomplete
-" inoremap <expr> <Tab> col('.') > 1 ? "\<C-N>" : "\<Tab>"
+inoremap <expr> <Tab> col('.') > 1 ? "\<C-N>" : "\<Tab>"
 
 " Tab to 4 space
 set tabstop=4
