@@ -54,7 +54,8 @@ set ignorecase
 set smartcase
 
 " Tab autocomplete
-inoremap <expr> <Tab> col('.') > 1 ? "\<C-N>" : "\<Tab>"
+" inoremap <expr> <Tab> col('.') > 1 ? "\<C-N>" : "\<Tab>"
+inoremap <expr> <Tab> getline('.')[0 : col('.')-2] =~ '\S' ? "\<C-N>" : "\<Tab>"
 
 " Tab to 4 space
 set tabstop=4
@@ -154,7 +155,7 @@ augroup python_settings
 
   " Run python with F5 
   " autocmd FileType python noremap <buffer> <C-s> :w! \| !python -i % <CR>
-  autocmd FileType python noremap <buffer> <F5> :w! \| !python % <CR> 
+  autocmd FileType python noremap <buffer> <F5> :w! \| !python % 
 augroup END
 
 " ------------------------------
