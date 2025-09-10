@@ -78,8 +78,8 @@ export EZA_COLORS="di=1;36:fi=0:ex=1;32:*.kdbx=1;37:da=38;5;250"
 
 
 # Aliases
-alias ls='eza -l --icons --group-directories-first --time-style=long-iso --git --no-permissions --no-user'
-alias ll='eza -la --icons --group-directories-first --time-style=long-iso --git'
+alias ls='eza -l --sort=ext --icons --group-directories-first --time-style=long-iso --git --no-permissions --no-user'
+alias ll='eza -la --sort=ext --icons --group-directories-first --time-style=long-iso --git'
 alias lss='eza --icons --tree --level=2 --group-directories-first'
 alias d='cd ~/Downloads'
 alias bin='cd ~/.local/bin'
