@@ -27,7 +27,7 @@ vnoremap <C-x> d
 
 " Remap delete commands to use black hole register
 nnoremap d "_d
-" nnoremap dd "_dd
+nnoremap dd "_dd
 nnoremap x "_x
 nnoremap cw "_cw
 
