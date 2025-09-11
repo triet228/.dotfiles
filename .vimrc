@@ -155,7 +155,7 @@ augroup python_settings
 
   " Run python with F5 
   " autocmd FileType python noremap <buffer> <C-s> :w! \| !python -i % <CR>
-  autocmd FileType python noremap <buffer> <F5> :w! \| !python % 
+  autocmd FileType python noremap <buffer> <F5> :w! \| !python % <CR>
 augroup END
 
 " ------------------------------
