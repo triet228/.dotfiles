@@ -10,7 +10,30 @@ source $VIMRUNTIME/defaults.vim
 set noswapfile
 
 " Theme
-colorscheme torte 
+" colorscheme gruvbox
+" --- Custom Highlight Rules ---
+" Normal text (white) and black background
+hi Normal ctermbg=black ctermfg=white
+
+" Keywords like 'def', 'return', 'import' (orange)
+hi Keyword ctermfg=208
+
+" Function names (yellow)
+hi Function ctermfg=yellow
+
+" Strings and Comments (green)
+hi String ctermfg=darkgray
+hi Comment ctermfg=darkgray
+
+" Numbers (magenta/purple)
+hi Number ctermfg=magenta
+
+" Operators like '+' and '*' (cyan)
+hi Operator ctermfg=cyan
+
+" Line numbers (dark grey)
+hi LineNr ctermfg=darkgrey
+
 
 " Finding files in sub directories :find <file> <tab>
 set path+=**
@@ -55,7 +78,7 @@ set smartcase
 
 " Tab autocomplete
 " inoremap <expr> <Tab> col('.') > 1 ? "\<C-N>" : "\<Tab>"
-inoremap <expr> <Tab> getline('.')[0 : col('.')-2] =~ '\S' ? "\<C-N>" : "\<Tab>"
+inoremap <expr> <Tab> getline('.')[0 : col('.')-2] =~ '\S' ? "\<C-X><C-N>" : "\<Tab>"
 
 " Tab to 4 space
 set tabstop=4
