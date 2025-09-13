@@ -10,30 +10,7 @@ source $VIMRUNTIME/defaults.vim
 set noswapfile
 
 " Theme
-" colorscheme gruvbox
-" --- Custom Highlight Rules ---
-" Normal text (white) and black background
-hi Normal ctermbg=black ctermfg=white
-
-" Keywords like 'def', 'return', 'import' (orange)
-hi Keyword ctermfg=208
-
-" Function names (yellow)
-hi Function ctermfg=yellow
-
-" Strings and Comments (green)
-hi String ctermfg=darkgray
-hi Comment ctermfg=darkgray
-
-" Numbers (magenta/purple)
-hi Number ctermfg=magenta
-
-" Operators like '+' and '*' (cyan)
-hi Operator ctermfg=cyan
-
-" Line numbers (dark grey)
-hi LineNr ctermfg=darkgrey
-
+colorscheme torte
 
 " Finding files in sub directories :find <file> <tab>
 set path+=**
