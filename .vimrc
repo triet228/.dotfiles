@@ -153,6 +153,14 @@ augroup python_settings
   " Ctrl S to save file
   autocmd FileType python noremap <buffer> <C-s> :w <CR>
 
+  " Coding shorcut
+  autocmd FileType python inoremap ( ()<Left>
+  autocmd FileType python inoremap [ []<Left>
+  autocmd FileType python inoremap { {}<Left>
+  autocmd FileType python inoremap " ""<Left>
+  autocmd FileType python inoremap ' ''<Left>
+  autocmd FileType python inoremap jk <Right>
+
   " Run python with F5 
   " autocmd FileType python noremap <buffer> <C-s> :w! \| !python -i % <CR>
   autocmd FileType python noremap <buffer> <F5> :w! \| !python % <CR>
