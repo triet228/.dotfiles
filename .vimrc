@@ -176,8 +176,17 @@ augroup cpp_settings
   autocmd FileType cpp,c setlocal cindent smartindent
 
   " Limit code at 80 characters length
-  autocmd FileType cpp,c set textwidth=78
+  " autocmd FileType cpp,c set textwidth=78
   autocmd FileType cpp,c match ErrorMsg '\%>78v.\+'
+
+
+  " Coding shorcut
+  autocmd FileType cpp,c inoremap ( ()<Left>
+  autocmd FileType cpp,c inoremap [ []<Left>
+  autocmd FileType cpp,c inoremap { {}<Left>
+  autocmd FileType cpp,c inoremap " ""<Left>
+  autocmd FileType cpp,c inoremap ' ''<Left>
+  autocmd FileType cpp,c inoremap jk <Right>
 
   " Ctrl S to save file
   autocmd FileType cpp,c noremap <buffer> <C-s> :w <CR>
