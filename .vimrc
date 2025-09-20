@@ -86,7 +86,12 @@ inoremap  <Right> <Nop>
 " Disable mouse
 set mouse=
 
-
+" Move between visual line
+noremap <buffer> j gj
+noremap <buffer> k gk
+noremap <buffer> 0 g0
+noremap <buffer> ^ g^
+noremap <buffer> $ g$
 
 
 " ------------------------------
