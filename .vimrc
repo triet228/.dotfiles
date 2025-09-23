@@ -3,7 +3,6 @@
 " ------------------------------
 
 " Get the defaults that most users want.
-" /usr/share/vim/vim91/defaults.vim
 source $VIMRUNTIME/defaults.vim
 
 " No temp file
@@ -68,11 +67,14 @@ nnoremap <F5> :set spell!<CR>
 " No error sound when hitting boundary
 set belloff=all
 
-
-
+" Move between visual line
+noremap <buffer> j gj
+noremap <buffer> k gk
+noremap <buffer> 0 g0
+noremap <buffer> ^ g^
+noremap <buffer> $ g$
 
 " Use for training purpose
-
 " Disable arrow keys
 noremap   <Up>    <Nop>
 noremap   <Down>  <Nop>
@@ -85,14 +87,6 @@ inoremap  <Right> <Nop>
 
 " Disable mouse
 set mouse=
-
-" Move between visual line
-noremap <buffer> j gj
-noremap <buffer> k gk
-noremap <buffer> 0 g0
-noremap <buffer> ^ g^
-noremap <buffer> $ g$
-
 
 " ------------------------------
 " LaTeX-specific settings
@@ -112,15 +106,7 @@ augroup latex_settings
   " tab to accept spell check
   autocmd filetype tex noremap <buffer> <tab> 1z=lw
 
-  " move visually instead of by line
-  autocmd FileType tex noremap <buffer> j gj
-  autocmd FileType tex noremap <buffer> k gk
-  autocmd FileType tex noremap <buffer> 0 g0
-  autocmd FileType tex noremap <buffer> ^ g^
-  autocmd FileType tex noremap <buffer> $ g$
-
   " Ctrl + S to compile Latex
-  autocmd FileType tex inoremap <buffer> <C-s> <Esc> :w \| !tectonic % <CR><BS>a
   autocmd FileType tex nnoremap <buffer> <C-s> <Esc> :w \| !tectonic % <CR><BS>
 
 augroup END
