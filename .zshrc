@@ -1,50 +1,94 @@
-
 # ~/.zshrc
 
-# Switch caps and escape key
-setxkbmap -option caps:swapescape
+# ------------------------------------------------------------------------------
+# ENVIRONMENT & EXPORTS
+# ------------------------------------------------------------------------------
 
-# Load colors
-autoload -Uz colors && colors
+# Set default editor
+export EDITOR=vim
+export VISUAL=vim
 
-# Set colored prompt
-PROMPT='%F{yellow}[%F{green}%n@%m %F{cyan}%~%F{yellow}]%f$ '
+# Add local binaries to the path
+export PATH="$HOME/.local/bin:$PATH"
 
-# History settings
+# Custom colors for eza/ls
+export EZA_COLORS="di=1;36:fi=0:ex=1;32:*.kdbx=1;37:da=38;5;250"
+
+# ------------------------------------------------------------------------------
+# SHELL OPTIONS (setopt)
+# ------------------------------------------------------------------------------
+
+# Navigate directories by just typing their name
+setopt autocd
+
+# Allow comments in the interactive shell
+setopt interactivecomments
+
+# Make globbing (e.g. `ls *.txt`) case-insensitive
+setopt nocaseglob
+
+# Required for the prompt to display git info correctly
+setopt PROMPT_SUBST
+
+# ------------------------------------------------------------------------------
+# HISTORY CONFIGURATION
+# ------------------------------------------------------------------------------
+
 HISTFILE=~/.zsh_history
 HISTSIZE=100000
 SAVEHIST=100000
+setopt APPEND_HISTORY       # Append to history file
+setopt INC_APPEND_HISTORY   # Add commands to history immediately
+setopt SHARE_HISTORY        # Share history between all sessions
+setopt HIST_IGNORE_ALL_DUPS # Remove older duplicate entries
+setopt HIST_REDUCE_BLANKS   # Remove blank lines from history
 
-# Update history in real-time
-setopt APPEND_HISTORY
-setopt INC_APPEND_HISTORY
-setopt SHARE_HISTORY
-setopt HIST_IGNORE_ALL_DUPS
-setopt HIST_REDUCE_BLANKS
+# ------------------------------------------------------------------------------
+# PROMPT CONFIGURATION
+# ------------------------------------------------------------------------------
 
-# Plugins
+# Load version control system info and colors
+autoload -Uz vcs_info colors && colors
 
-# Show ghost suggestion
+# Function to run before every prompt
+precmd() {
+  # Get git info
+  vcs_info
+  # Add a blank line above the prompt
+  echo
+}
+
+# Format for the git branch info (e.g., "on main")
+zstyle ':vcs_info:git:*' formats '%F{magenta}on %b%f'
+
+# Left side of the prompt: [user@host path]
+PROMPT='%F{yellow}[%F{green}%n@%m %F{cyan}%~%F{yellow}]%f$ '
+# Right side of the prompt: git branch info
+RPROMPT='${vcs_info_msg_0_}'
+
+# ------------------------------------------------------------------------------
+# PLUGINS & EXTERNAL TOOLS INITIALIZATION
+# ------------------------------------------------------------------------------
+
+# Load zsh-autosuggestions
 if [[ -f /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh ]]; then
-    source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
+  source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 fi
 
-# Highlight command line colorful
+# Load zsh-syntax-highlighting
 if [[ -f /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]]; then
-    source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+  source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 fi
 
-# Load key binding for fzf search
-if [[ -f /usr/share/fzf/key-bindings.zsh ]]; then
-    source /usr/share/fzf/key-bindings.zsh
-fi
+# -- fzf (Fuzzy Finder) --
+# Load fzf keybindings and completion
+[[ -f /usr/share/fzf/key-bindings.zsh ]] && source /usr/share/fzf/key-bindings.zsh
+[[ -f /usr/share/fzf/completion.zsh ]] && source /usr/share/fzf/completion.zsh
 
-# Load fzf search completion
-if [[ -f /usr/share/fzf/completion.zsh ]]; then
-    source /usr/share/fzf/completion.zsh
-fi
+# Alt+C to cd into a directory starting from home
+export FZF_ALT_C_COMMAND="find ~ -type d"
 
-# New binding: ctrl-h to search from home
+# Ctrl+H to find a file starting from home
 fzf_file_from_home() {
   local orig_cmd="$FZF_CTRL_T_COMMAND"
   FZF_CTRL_T_COMMAND="find ~ -type f" fzf-file-widget
@@ -53,138 +97,10 @@ fzf_file_from_home() {
 zle -N fzf_file_from_home
 bindkey '^H' fzf_file_from_home
 
-# Alt C to cd to folder from home directory
-export FZF_ALT_C_COMMAND="find ~ -type d"
-
-# Smart tab completion
-autoload -Uz compinit
-compinit
-
-# Ctrl F to complete
-bindkey '^F' complete-word
-
-# Tab to accep ghost suggestion
-bindkey '^I' autosuggest-accept
-
-# Default editor
-export EDITOR=vim
-export VISUAL=vim
-
-# Extend PATH
-export PATH="$HOME/.local/bin:$PATH"
-
-# Overwrite color for ls
-export EZA_COLORS="di=1;36:fi=0:ex=1;32:*.kdbx=1;37:da=38;5;250"
-
-
-# Aliases
-alias ls='eza -l --sort=ext --icons --group-directories-first --time-style=long-iso --git --no-permissions --no-user'
-alias ll='eza -la --sort=ext --icons --group-directories-first --time-style=long-iso --git'
-alias lss='eza --icons --tree --level=2 --group-directories-first'
-alias d='cd ~/Downloads'
-alias bin='cd ~/.local/bin'
-alias da='z ~/Data/ && ls'
-alias c='z ~/Data/CLASSES && ls'
-alias yy='pwd | tr -d "\n" | xclip -selection clipboard'
-alias h='z ~ && ll'
-alias p='cd ~/Data/Projects/'
-alias sleepp='slock & systemctl suspend'
-alias cpd='cp -t ~/Downloads'
-alias icat='kitty +kitten icat'
-alias math='qalc'
-alias update='yay -Syu --noconfirm'
-
-# Options
-
-# cd by just typing directory name
-setopt autocd
-
-# Make globbing (like cd, ls) case insensitive
-setopt nocaseglob
-
-# Make TAB completion case insensitive too
-zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
-
-# allow comments in the shell
-setopt interactivecomments
-
-# Load local configs
-[[ -f ~/.zshrc.local ]] && source ~/.zshrc.local
-
-# zoxide initialization
+# -- Other Tools --
 eval "$(zoxide init zsh)"
 eval "$(direnv hook zsh)"
-
-# Functions
-
-# General function to open file
-open() {
-  xdg-open "$@" >/dev/null 2>&1 &
-}
-
-# Open last directory in lf
-lff() {
-    tmp="$(mktemp)"
-    lf -last-dir-path="$tmp" "$@"
-    if [[ -f "$tmp" ]]; then
-        dir="$(< "$tmp")"
-        rm -f "$tmp"
-        [[ -d "$dir" ]] && cd "$dir"
-    fi
-}
-
-# Open file if it exists
-command_not_found_handler() {
-    if [[ -f "$1" ]]; then
-        xdg-open "$1"
-    else
-        echo "zsh: command not found: $1"
-    fi
-}
-
-# Auto tree after cd
-cd() {
-    z "$@" && ls
-}
-
-# Blank line before prompt
-precmd() { echo }
-
-# Copy to Downloads folder
-cptd() {
-  cp -r -- ./* ~/Downloads/
-}
-
-# Move from Downloads folder
-mvfd() {
-  mv ~/Downloads/* .
-}
-
-# Clean system 
-clean() {
-  yay -Scc --noconfirm
-  yay -Yc --noconfirm
-  sudo pacman -Rns $(pacman -Qtdq --quiet) --noconfirm
-  sudo pacman -Scc --noconfirm
-  sudo journalctl --vacuum-size=50M
-  sudo paccache -rk1
-  sudo rm -rf ~/Downloads/*
-  sudo rm -rf ~/Pictures/*
-  bash -O extglob -c 'rm -rf ~/.cache/!(keepassxc|Tectonic|mozilla)'
-  sudo rm -rf /tmp/*
-  git --git-dir=$HOME/.dotfiles/.git --work-tree=$HOME/.dotfiles pull
-  clear
-  neofetch
-}
-
-# Initialize pyenv - python version control
 eval "$(pyenv init -)"
-
-# Print out cat
-neofetch
-
-
-
 
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
@@ -201,3 +117,118 @@ fi
 unset __conda_setup
 # <<< conda initialize <<<
 
+# Load local/private configs if they exist
+[[ -f ~/.zshrc.local ]] && source ~/.zshrc.local
+
+# ------------------------------------------------------------------------------
+# COMPLETION & KEYBINDINGS
+# ------------------------------------------------------------------------------
+
+# Initialize the tab completion system
+autoload -Uz compinit
+compinit
+
+# Make tab completion case-insensitive
+zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
+
+# Keybindings
+bindkey '^F' complete-word      # Ctrl+F to complete word
+bindkey '^I' autosuggest-accept # Tab to accept suggestion
+setxkbmap -option caps:swapescape # Swap Caps Lock and Escape
+
+# ------------------------------------------------------------------------------
+# ALIASES
+# ------------------------------------------------------------------------------
+
+# Navigation & Listing
+alias ll='eza -la --sort=ext --icons --group-directories-first --time-style=long-iso --git'
+alias ls='eza -l --sort=ext --icons --group-directories-first --time-style=long-iso --git --no-permissions --no-user'
+alias lss='eza --icons --tree --level=2 --group-directories-first'
+alias lsss='eza --icons --tree --level=3 --group-directories-first'
+alias lssss='eza --icons --tree --level=4 --group-directories-first'
+alias lsssss='eza --icons --tree --level=5 --group-directories-first'
+alias lssssss='eza --icons --tree --level=6 --group-directories-first'
+alias lsssssss='eza --icons --tree --level=7 --group-directories-first'
+alias lssssssss='eza --icons --tree --level=8 --group-directories-first'
+alias lsssssssss='eza --icons --tree --level=9 --group-directories-first'
+alias d='cd ~/Downloads'
+alias p='cd ~/Projects/'
+alias bin='cd ~/.local/bin'
+alias h='z ~ && ll'
+alias da='z ~/Data/ && ls'
+alias c='z ~/Data/CLASSES && ls'
+
+# System & Utilities
+alias update='yay -Syu --noconfirm'
+alias sleepp='slock & systemctl suspend'
+alias math='qalc'
+alias icat='kitty +kitten icat'
+
+# File operations
+alias cpd='cp -t ~/Downloads'
+alias yy='pwd | tr -d "\n" | xclip -selection clipboard'
+
+# ------------------------------------------------------------------------------
+# FUNCTIONS
+# ------------------------------------------------------------------------------
+
+# General function to open a file with the default application
+open() {
+  xdg-open "$@" >/dev/null 2>&1 &
+}
+
+# Open lf and cd to the last directory on exit
+lff() {
+  local tmp="$(mktemp)"
+  lf -last-dir-path="$tmp" "$@"
+  if [[ -f "$tmp" ]]; then
+    local dir="$(< "$tmp")"
+    rm -f "$tmp"
+    [[ -d "$dir" ]] && cd "$dir"
+  fi
+}
+
+# Override 'cd' to use zoxide and then list directory contents
+cd() {
+  z "$@" && ls
+}
+
+# Copy contents of current directory to Downloads
+cptd() {
+  cp -r -- ./* ~/Downloads/
+}
+
+# Move contents of Downloads to current directory
+mvfd() {
+  mv ~/Downloads/* .
+}
+
+# Clean system caches and packages
+clean() {
+  yay -Scc --noconfirm
+  yay -Yc --noconfirm
+  sudo pacman -Rns $(pacman -Qtdq --quiet) --noconfirm
+  sudo pacman -Scc --noconfirm
+  sudo journalctl --vacuum-size=50M
+  sudo paccache -rk1
+  sudo rm -rf ~/Downloads/*
+  sudo rm -rf ~/Pictures/*
+  bash -O extglob -c 'rm -rf ~/.cache/!(keepassxc|Tectonic|mozilla)'
+  sudo rm -rf /tmp/*
+  git --git-dir=$HOME/.dotfiles/.git --work-tree=$HOME/.dotfiles pull
+  clear
+  neofetch
+}
+
+# If a command is not found, try to open it as a file
+command_not_found_handler() {
+  if [[ -f "$1" ]]; then
+    xdg-open "$1"
+  else
+    echo "zsh: command not found: $1" >&2 # Send error to stderr
+    return 127
+  fi
+}
+
+# Print out cat at the start of shell
+neofetch
