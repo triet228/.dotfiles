@@ -138,7 +138,7 @@ augroup python_settings
   autocmd!
 
   " Limit code at 80 characters length
-  autocmd FileType python set textwidth=78
+  " autocmd FileType python set textwidth=78
   autocmd FileType python match ErrorMsg '\%>78v.\+'
 
   " Ctrl S to save file
