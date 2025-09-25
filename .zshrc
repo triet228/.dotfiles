@@ -43,6 +43,7 @@ setopt SHARE_HISTORY        # Share history between all sessions
 setopt HIST_IGNORE_ALL_DUPS # Remove older duplicate entries
 setopt HIST_REDUCE_BLANKS   # Remove blank lines from history
 
+
 # ------------------------------------------------------------------------------
 # PROMPT CONFIGURATION
 # ------------------------------------------------------------------------------
@@ -54,17 +55,30 @@ autoload -Uz vcs_info colors && colors
 precmd() {
   # Get git info
   vcs_info
-  # Add a blank line above the prompt
+
+  # --- Conditional Prompt Logic ---
+  # Set a character limit for the path length
+  local path_len_threshold=20 
+
+  # Check the length of the displayed path (%~)
+  if [[ ${#${(%):-%~}} -gt $path_len_threshold ]]; then
+    # If the path is LONG, use a two-line prompt
+    PROMPT=$'%F{yellow}[%F{green}%n@%m %F{cyan}%~%F{yellow}]%f\n>> '
+  else
+    # If the path is SHORT, use a single-line prompt
+    PROMPT=$'%F{yellow}[%F{green}%n@%m %F{cyan}%~%F{yellow}]%f$ '
+  fi
+
+  # Add blank line before prompt
   echo
 }
 
 # Format for the git branch info (e.g., "on main")
 zstyle ':vcs_info:git:*' formats '%F{magenta}on %b%f'
 
-# Left side of the prompt: [user@host path]
-PROMPT='%F{yellow}[%F{green}%n@%m %F{cyan}%~%F{yellow}]%f$ '
 # Right side of the prompt: git branch info
 RPROMPT='${vcs_info_msg_0_}'
+
 
 # ------------------------------------------------------------------------------
 # PLUGINS & EXTERNAL TOOLS INITIALIZATION
