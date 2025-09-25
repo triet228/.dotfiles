@@ -100,7 +100,6 @@ bindkey '^H' fzf_file_from_home
 # -- Other Tools --
 eval "$(zoxide init zsh)"
 eval "$(direnv hook zsh)"
-eval "$(pyenv init -)"
 
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
