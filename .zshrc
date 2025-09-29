@@ -51,22 +51,21 @@ setopt HIST_REDUCE_BLANKS   # Remove blank lines from history
 # Load version control system info and colors
 autoload -Uz vcs_info colors && colors
 
-# Function to run before every prompt
 precmd() {
   # Get git info
   vcs_info
 
   # --- Conditional Prompt Logic ---
   # Set a character limit for the path length
-  local path_len_threshold=20 
+  local path_len_threshold=20
 
   # Check the length of the displayed path (%~)
   if [[ ${#${(%):-%~}} -gt $path_len_threshold ]]; then
     # If the path is LONG, use a two-line prompt
-    PROMPT=$'%F{yellow}[%F{green}%n@%m %F{cyan}%~%F{yellow}]%f\n>> '
+    PROMPT="$CONDA_PROMPT_MODIFIER"$'%F{yellow}[%F{green}%n@%m %F{cyan}%~%F{yellow}]%f\n>> '
   else
     # If the path is SHORT, use a single-line prompt
-    PROMPT=$'%F{yellow}[%F{green}%n@%m %F{cyan}%~%F{yellow}]%f$ '
+    PROMPT="$CONDA_PROMPT_MODIFIER"$'%F{yellow}[%F{green}%n@%m %F{cyan}%~%F{yellow}]%f$ '
   fi
 
   # Add blank line before prompt
