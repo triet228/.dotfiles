@@ -67,7 +67,7 @@ nnoremap <F5> :set spell!<CR>
 set belloff=all
 
 " Ctrl + S to save file
-map <buffer> <C-s> :w 
+map <buffer> <C-s> :w <CR>
 
 " Move between visual line
 noremap <buffer> j gj
