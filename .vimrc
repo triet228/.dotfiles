@@ -53,7 +53,7 @@ set ignorecase
 set smartcase
 
 " Tab autocomplete
-inoremap <expr> <Tab> getline('.')[0 : col('.')-2] =~ '\S' ? "\<C-X><C-N>" : "\<Tab>"
+inoremap <expr> <Tab> strpart(getline('.'), 0, col('.') - 1) =~ '^\s*$' ? "\<Tab>" : "\<C-X><C-N>"
 
 " Tab to 4 space
 set tabstop=4
