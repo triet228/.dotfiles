@@ -98,8 +98,9 @@ fi
 [[ -f /usr/share/fzf/key-bindings.zsh ]] && source /usr/share/fzf/key-bindings.zsh
 [[ -f /usr/share/fzf/completion.zsh ]] && source /usr/share/fzf/completion.zsh
 
-# Alt+C to cd into a directory starting from home
-export FZF_ALT_C_COMMAND="find ~ -type d"
+# Alt + C to fuzzy find a file
+bindkey -r '^[c' # unbind alt-c
+bindkey '^[c' fzf-file-widget
 
 # Ctrl+H to find a file starting from home
 fzf_file_from_home() {

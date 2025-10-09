@@ -53,7 +53,6 @@ set ignorecase
 set smartcase
 
 " Tab autocomplete
-" inoremap <expr> <Tab> col('.') > 1 ? "\<C-N>" : "\<Tab>"
 inoremap <expr> <Tab> getline('.')[0 : col('.')-2] =~ '\S' ? "\<C-X><C-N>" : "\<Tab>"
 
 " Tab to 4 space
@@ -66,6 +65,9 @@ nnoremap <F5> :set spell!<CR>
 
 " No error sound when hitting boundary
 set belloff=all
+
+" Ctrl + S to save file
+map <buffer> <C-s> :w 
 
 " Move between visual line
 noremap <buffer> j gj
@@ -144,7 +146,6 @@ augroup text_settings
   autocmd FileType text noremap <buffer> 0 g0
   autocmd FileType text noremap <buffer> ^ g^
   autocmd FileType text noremap <buffer> $ g$
-  autocmd FileType text noremap <buffer> <C-s> :w <CR>
 augroup END
 
 
@@ -157,9 +158,6 @@ augroup python_settings
   " Limit code at 80 characters length
   " autocmd FileType python set textwidth=78
   " autocmd FileType python match ErrorMsg '\%>78v.\+'
-
-  " Ctrl S to save file
-  autocmd FileType python noremap <buffer> <C-s> :w <CR>
 
   " Coding shorcut
   autocmd FileType python inoremap ( ()<Left>
@@ -195,9 +193,6 @@ augroup cpp_settings
   autocmd FileType cpp,c inoremap " ""<Left>
   autocmd FileType cpp,c inoremap ' ''<Left>
   autocmd FileType cpp,c inoremap jk <Right>
-
-  " Ctrl S to save file
-  autocmd FileType cpp,c noremap <buffer> <C-s> :w <CR>
 
   " Compile and run C++ code with F5
   autocmd FileType cpp,c nnoremap <buffer> <F5> :w <bar> !g++ % && ./a.out <CR>
