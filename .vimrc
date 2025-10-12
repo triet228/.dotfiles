@@ -29,6 +29,9 @@ nnoremap d "_d
 nnoremap dd "_dd
 nnoremap x "_x
 nnoremap cw "_cw
+vnoremap d "_d
+vnoremap x "_x
+
 
 " Persistent undo
 set undofile
