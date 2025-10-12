@@ -72,6 +72,9 @@ set belloff=all
 " Ctrl + S to save file
 map <buffer> <C-s> :w <CR>
 
+" Ctrl + a to select all
+nnoremap <C-a> ggVG
+
 " Move between visual line
 noremap <buffer> j gj
 noremap <buffer> k gk
@@ -91,7 +94,7 @@ inoremap  <Left>  <Nop>
 inoremap  <Right> <Nop>
 
 " Disable mouse
-set mouse=
+" set mouse=
 
 " ------------------------------
 " Commenting shortcut
