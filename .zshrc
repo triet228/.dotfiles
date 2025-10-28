@@ -18,6 +18,9 @@ export EZA_COLORS="di=1;36:fi=0:ex=1;32:*.kdbx=1;37:da=38;5;250"
 # SHELL OPTIONS (setopt)
 # ------------------------------------------------------------------------------
 
+# Vim mode in terminal
+bindkey -v
+
 # Navigate directories by just typing their name
 setopt autocd
 
@@ -176,6 +179,7 @@ alias update='yay -Syu --noconfirm'
 alias sleepp='slock & systemctl suspend'
 alias math='qalc'
 alias icat='kitty +kitten icat'
+alias convert='magick'
 
 # File operations
 alias cpd='cp -t ~/Downloads'
