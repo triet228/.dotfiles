@@ -247,5 +247,32 @@ command_not_found_handler() {
   fi
 }
 
+# Function to compress one or more PDFs
+# Usage: compress <file1.pdf> [file2.pdf] ...
+compress() {
+  # Check if at least one argument is given
+  if [ -z "$1" ]; then
+    echo "Usage: compress <file1.pdf> [file2.pdf] ..."
+    return 1
+  fi
+
+  local input_file
+  # Loop through ALL arguments provided ($@)
+  for input_file in "$@"; do
+    # Check if the file actually exists
+    if [ ! -f "$input_file" ]; then
+      echo "Skipping '$input_file': File not found."
+      continue # Skip to the next file
+    fi
+
+    # Generate the output filename
+    local output_file="${input_file%.pdf}_compressed.pdf"
+
+    echo "Compressing '$input_file' -> '$output_file'..."
+    ps2pdf -dPDFSETTINGS=/ebook "$input_file" "$output_file"
+    echo "Compression complete for '$input_file'."
+  done
+}
+
 # Print out cat at the start of shell
 neofetch

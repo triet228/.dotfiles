@@ -35,7 +35,7 @@ vnoremap x "_x
 
 " Persistent undo
 set undofile
-set undodir=~/.vim/undodir
+set undodir=$HOME/.vim/undodir
 set undolevels=10000
 set undoreload=10000
 
