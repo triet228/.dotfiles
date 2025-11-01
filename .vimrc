@@ -189,7 +189,7 @@ augroup cpp_settings
 
   " Limit code at 80 characters length
   " autocmd FileType cpp,c set textwidth=78
-  autocmd FileType cpp,c match ErrorMsg '\%>78v.\+'
+  " autocmd FileType cpp,c match ErrorMsg '\%>78v.\+'
 
 
   " Coding shorcut
