@@ -180,6 +180,7 @@ alias sleepp='slock & systemctl suspend'
 alias math='qalc'
 alias icat='kitty +kitten icat'
 alias convert='magick'
+alias youtube='scrapetubefzf'
 
 # File operations
 alias cpd='cp -t ~/Downloads'
