@@ -73,7 +73,7 @@ set belloff=all
 map <buffer> <C-s> :w <CR>
 
 " Ctrl + a to select all
-nnoremap <C-a> ggVG
+" nnoremap <C-a> ggVG
 
 " Move between visual line
 noremap <buffer> j gj
