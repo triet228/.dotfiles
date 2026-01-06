@@ -32,7 +32,6 @@ nnoremap cw "_cw
 vnoremap d "_d
 vnoremap x "_x
 
-
 " Persistent undo
 set undofile
 set undodir=$HOME/.vim/undodir
