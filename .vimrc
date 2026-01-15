@@ -24,6 +24,9 @@ vnoremap <C-c> y`>
 vnoremap y y`>
 vnoremap <C-x> d
 
+" Persistent clipboard
+autocmd VimLeave * call system("xsel -ib", getreg('+'))
+
 " Remap delete commands to use black hole register
 nnoremap d "_d
 nnoremap dd "_dd
