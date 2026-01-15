@@ -1,0 +1,68 @@
+#!/bin/sh
+
+# --- Image Drawing Function ---
+# Uses Kitty's 'icat' protocol to render images directly in the terminal
+draw() {
+  kitten icat --stdin no --transfer-mode memory --place "${w}x${h}@${x}x${y}" "$1" < /dev/null > /dev/tty
+  exit 1
+}
+
+# --- Variables sent by lf ---
+file="$1"
+w="$2"
+h="$3"
+x="$4"
+y="$5"
+
+# --- Extension Checks ---
+# Check CSV by extension because 'file' command often mistakes them for plain text
+case "$file" in
+  *.csv)
+    # Align columns with 'column', then colorize with 'bat'
+    column -t -s, "$file" | bat --language=csv --color=always --style=plain
+    exit 1
+    ;;
+esac
+
+# --- MIME Type Checks ---
+# Identify files by their internal signature (magic numbers)
+case "$(file -Lb --mime-type "$file")" in
+  image/*)
+    draw "$file"
+    ;;
+
+  # Archives (zip, tar, rar, etc.)
+  application/zip|application/x-tar|application/gzip|application/x-bzip2|application/x-7z-compressed|application/x-rar|application/x-xz)
+    # List archive contents using atool
+    atool -l "$file"
+    exit 1
+    ;;
+
+  # Excel Spreadsheets (xlsx, xls)
+  application/vnd.openxmlformats-officedocument.spreadsheetml.sheet|application/vnd.ms-excel)
+    # Convert to CSV -> align columns -> syntax highlight
+    xlsx2csv "$file" | column -t -s, | bat --language=csv --color=always --style=plain
+    exit 1
+    ;;
+
+  # PDF Handling
+  application/pdf)
+    # 1. Generate a hash based on file path + modified time for caching
+    hash="$(stat --printf '%n\0%i\0%F\0%s\0%W' "$file" | sha256sum | awk '{print $1}')"
+    cache="$HOME/.cache/lf/thumb_${hash}.jpg"
+
+    # 2. Make sure cache folder exists
+    mkdir -p "$HOME/.cache/lf"
+
+    # 3. If image doesn't exist in cache, generate it using pdftoppm (page 1)
+    if [ ! -f "$cache" ]; then
+        pdftoppm -jpeg -f 1 -singlefile "$file" "${cache%.jpg}"
+    fi
+
+    draw "$cache"
+    ;;
+esac
+
+# --- Fallback ---
+# Use bat for syntax highlighting on all other text/code files
+bat --color=always "$file"

@@ -1,0 +1,8 @@
+set drawbox true
+set icons true
+set preview true
+set previewer ~/.config/lf/previewer
+set cleaner ~/.config/lf/cleaner
+map . set hidden!
+map DD %trash-put "$f"
+
