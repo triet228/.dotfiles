@@ -14,6 +14,9 @@ export PATH="$HOME/.local/bin:$PATH"
 # Custom colors for eza/ls
 export EZA_COLORS="di=1;36:fi=0:ex=1;32:*.kdbx=1;37:da=38;5;250"
 
+# Supress warning for conda env
+export PYTHONWARNINGS="ignore:OpenSSL 3's legacy provider failed to load"
+
 # ------------------------------------------------------------------------------
 # SHELL OPTIONS (setopt)
 # ------------------------------------------------------------------------------
