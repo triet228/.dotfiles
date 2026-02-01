@@ -110,10 +110,10 @@ augroup commenting_blocks_of_code
   autocmd FileType mail                      let b:comment_leader = '> '
   autocmd FileType vim                       let b:comment_leader = '" '
 augroup END
-" Ctrl + / to comment
-noremap <silent> <C-/> :<C-B>silent <C-E>s/^/<C-R>=escape(b:comment_leader,'\/')<CR>/<CR>:nohlsearch<CR>
-" Ctrl + shift + / to uncomment
-noremap <silent> <C-S-/> :<C-B>silent <C-E>s/^\V<C-R>=escape(b:comment_leader,'\/')<CR>//e<CR>:nohlsearch<CR>
+" cm to comment
+noremap <silent> <C-m> :<C-B>silent <C-E>s/^/<C-R>=escape(b:comment_leader,'\/')<CR>/<CR>:nohlsearch<CR>
+" cmm to uncomment
+noremap <silent> <C-S-m> :<C-B>silent <C-E>s/^\V<C-R>=escape(b:comment_leader,'\/')<CR>//e<CR>:nohlsearch<CR>
 
 " ------------------------------
 " LaTeX-specific settings
