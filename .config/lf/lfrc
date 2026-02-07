@@ -1,8 +1,14 @@
+# Visual setting
 set drawbox true
 set icons true
 set preview true
 set previewer ~/.config/lf/previewer
 set cleaner ~/.config/lf/cleaner
+
+# Shortcut
 map . set hidden!
 map DD %trash-put "$f"
 
+# Sort by file type and directory
+set sortby ext
+set dirfirst true

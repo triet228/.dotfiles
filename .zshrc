@@ -184,7 +184,7 @@ alias math='qalc'
 alias icat='kitty +kitten icat'
 alias convert='magick'
 alias youtube='scrapetubefzf'
-alias matlab='docker run -it --rm -p 8888:8888 -v ~/matlab/config:/home/matlab/Documents/MATLAB -v ~/Projects:/home/matlab/Projects -v ~/Data:/home/matlab/Data/CLASSES/AEROSP_568/Assignment1 -v matlab_config:/home/matlab/.matlab --shm-size=2g --name matlab_container matlab -browser'
+alias matlab='docker run -it --rm -p 8888:8888 -v ~/Projects/FAST:/home/matlab/FAST -v ~/Data/CLASSES/AEROSP_568/Assignment1:/home/matlab/Assignment1 -v matlab_config:/home/matlab/.matlab --shm-size=2g --name matlab_container matlab -browser'
 
 # File operations
 alias cpd='cp -t ~/Downloads'
