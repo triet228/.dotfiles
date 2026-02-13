@@ -235,7 +235,7 @@ clean() {
   sudo paccache -rk1
   sudo rm -rf ~/Downloads/*
   sudo rm -rf ~/Pictures/*
-  bash -O extglob -c 'rm -rf ~/.cache/!(keepassxc|Tectonic|mozilla|pre-commit|hugo_cache)'
+  bash -O extglob -c 'rm -rf ~/.cache/!(keepassxc|Tectonic|mozilla|pre-commit|hugo_cache|lf)'
   sudo rm -rf /tmp/*
   git --git-dir=$HOME/.dotfiles/.git --work-tree=$HOME/.dotfiles pull
   clear
