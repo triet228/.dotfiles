@@ -4,7 +4,7 @@ sudo systemctl start tailscaled &
 kitty & 
 firefox & 
 slstatus &
-keepassxc &
+keepassxc --allow-screencapture &
 ferdium &
 sudo systemctl restart tailscaled &
 xset -b
