@@ -17,11 +17,11 @@ Print
     
 # Increase volume
 XF86AudioRaiseVolume
-    pamixer -i 5
+    pamixer -i 20
 
 # Decrease volume
 XF86AudioLowerVolume
-    pamixer -d 5
+    pamixer -d 20
 
 # Toggle mute
 XF86AudioMute
@@ -42,4 +42,3 @@ XF86MonBrightnessDown
 # Find mouse
 F2
     find-cursor --size 320 --distance 40 --wait 400 --line-width 4 --color red
-
