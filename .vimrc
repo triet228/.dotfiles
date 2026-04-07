@@ -28,6 +28,11 @@ endfunction
 vnoremap <C-x> d
 vnoremap y y:call Osc52Copy()<CR>
 
+" Paste from system clipboard
+noremap yy "+yy
+noremap p "+p
+noremap P "+P
+
 " Remap delete commands to use black hole register
 nnoremap d "_d
 nnoremap dd "_dd
