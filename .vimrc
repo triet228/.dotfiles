@@ -19,13 +19,14 @@ let &t_SI = "\e[6 q"   " I in insert mode
 let &t_EI = "\e[2 q"   " Block in normal mode
 
 " Use system clipboard for copy and cut 
-set clipboard=unnamedplus
-vnoremap <C-c> y`>
-vnoremap y y`>
+function! Osc52Copy()
+  let text = getreg('"')
+  let encoded = system('base64 -w 0', text)
+  let encoded = substitute(encoded, '\n', '', 'g')
+  call writefile(["\e]52;c;" . encoded . "\x07"], '/dev/fd/1', 'b')
+endfunction
 vnoremap <C-x> d
-
-" Persistent clipboard
-autocmd VimLeave * call system("xsel -ib", getreg('+'))
+vnoremap y y:call Osc52Copy()<CR>
 
 " Remap delete commands to use black hole register
 nnoremap d "_d
@@ -96,7 +97,7 @@ inoremap  <Left>  <Nop>
 inoremap  <Right> <Nop>
 
 " Disable mouse
-set mouse=
+" set mouse=
 
 " ------------------------------
 " Commenting shortcut
