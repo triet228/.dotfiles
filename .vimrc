@@ -96,7 +96,7 @@ inoremap  <Left>  <Nop>
 inoremap  <Right> <Nop>
 
 " Disable mouse
-" set mouse=
+set mouse=
 
 " ------------------------------
 " Commenting shortcut
