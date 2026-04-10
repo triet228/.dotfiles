@@ -18,15 +18,17 @@ set path+=**
 let &t_SI = "\e[6 q"   " I in insert mode
 let &t_EI = "\e[2 q"   " Block in normal mode
 
-" Use system clipboard for copy and cut 
+" Use system clipboard for copy across ssh
 function! Osc52Copy()
   let text = getreg('"')
   let encoded = system('base64 -w 0', text)
   let encoded = substitute(encoded, '\n', '', 'g')
   call writefile(["\e]52;c;" . encoded . "\x07"], '/dev/fd/1', 'b')
 endfunction
-vnoremap <C-x> d
 vnoremap y y:call Osc52Copy()<CR>
+
+" Ctrl + x for cut
+vnoremap <C-x> d:call Osc52Copy()<CR>
 
 " Paste from system clipboard
 noremap yy "+yy
