@@ -25,6 +25,7 @@ function! Osc52Copy()
   let encoded = substitute(encoded, '\n', '', 'g')
   call writefile(["\e]52;c;" . encoded . "\x07"], '/dev/fd/1', 'b')
 endfunction
+vnoremap <C-x> "+d
 vnoremap y y:call Osc52Copy()<CR>
 
 " Ctrl + x for cut
