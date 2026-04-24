@@ -215,9 +215,9 @@ cd() {
   z "$@" && ls
 }
 
-# Copy contents of current directory to Downloads
+# Copy one or multiple files/folders to Downloads
 cptd() {
-  cp -r -- ./* ~/Downloads/
+  cp -r "$@" ~/Downloads/
 }
 
 # Move contents of Downloads to current directory
