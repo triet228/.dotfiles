@@ -217,12 +217,22 @@ cd() {
 
 # Copy one or multiple files/folders to Downloads
 cptd() {
-  cp -r "$@" ~/Downloads/
+  if [ "$#" -eq 0 ]; then
+    cp -riv * ~/Downloads/
+  else
+    cp -riv "$@" ~/Downloads/
+  fi
 }
+
 
 # Move contents of Downloads to current directory
 mvfd() {
   mv ~/Downloads/* .
+}
+
+# Move one or multiple files/folders to Downloads
+mvtd() {
+  mv "$@" ~/Downloads/
 }
 
 # Clean system caches and packages
