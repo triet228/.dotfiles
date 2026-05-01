@@ -103,8 +103,8 @@ inoremap  <Down>  <Nop>
 inoremap  <Left>  <Nop>
 inoremap  <Right> <Nop>
 
-" Enable mouse
-:set mouse=a
+" Mouse
+:set mouse=
 
 " ------------------------------
 " Commenting shortcut
