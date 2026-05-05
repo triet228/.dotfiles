@@ -18,30 +18,43 @@ set path+=**
 let &t_SI = "\e[6 q"   " I in insert mode
 let &t_EI = "\e[2 q"   " Block in normal mode
 
-" Use system clipboard for copy across ssh
-function! Osc52Copy()
-  let text = getreg('"')
-  let encoded = system('base64 -w 0', text)
-  let encoded = substitute(encoded, '\n', '', 'g')
-  call writefile(["\e]52;c;" . encoded . "\x07"], '/dev/fd/1', 'b')
-endfunction
-vnoremap y y:call Osc52Copy()<CR>
-
-" Ctrl + x for cut
-vnoremap <C-x> d:call Osc52Copy()<CR>
-
-" Paste from system clipboard
-noremap yy "+yy
-noremap p "+p
-noremap P "+P
-
-" Remap delete commands to use black hole register
+" --- COMMON SETTINGS (Both SSH and Local) ---
+" Remap delete commands to use black hole register (don't overwrite clipboard)
 nnoremap d "_d
 nnoremap dd "_dd
 nnoremap x "_x
 nnoremap cw "_cw
 vnoremap d "_d
 vnoremap x "_x
+
+if !empty($SSH_CONNECTION)
+    " --- SSH SESSION SETTINGS ---
+    function! Osc52Copy()
+      let text = getreg('"')
+      let encoded = system('base64 -w 0', text)
+      let encoded = substitute(encoded, '\n', '', 'g')
+      call writefile(["\e]52;c;" . encoded . "\x07"], '/dev/tty', 'b')
+    endfunction
+
+    vnoremap y y:call Osc52Copy()<CR>
+    vnoremap <C-x> d:call Osc52Copy()<CR>
+
+    " Paste from system clipboard (requires +clipboard support)
+    noremap yy "+yy
+    noremap p "+p
+    noremap P "+P
+else
+    " --- LOCAL SESSION SETTINGS ---
+    set clipboard=unnamedplus
+
+    vnoremap <C-c> y`>
+    vnoremap y y`>
+    vnoremap <C-x> d
+
+    " Persistent clipboard on exit
+    autocmd VimLeave * call system("xsel -ib", getreg('+'))
+endif
+
 
 " Persistent undo
 set undofile
