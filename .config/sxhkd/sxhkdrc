@@ -17,11 +17,11 @@ Print
     
 # Increase volume
 XF86AudioRaiseVolume
-    pamixer -i 20
+    pamixer -i 5
 
 # Decrease volume
 XF86AudioLowerVolume
-    pamixer -d 20
+    pamixer -d 5
 
 # Toggle mute
 XF86AudioMute
