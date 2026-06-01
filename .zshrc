@@ -17,6 +17,9 @@ export EZA_COLORS="di=1;36:fi=0:ex=1;32:*.kdbx=1;37:da=38;5;250"
 # Supress warning for conda env
 export PYTHONWARNINGS="ignore:OpenSSL 3's legacy provider failed to load"
 
+# Ollama for Tailscale port
+export OLLAMA_HOST=http://100.65.249.113:11434
+
 # ------------------------------------------------------------------------------
 # SHELL OPTIONS (setopt)
 # ------------------------------------------------------------------------------
