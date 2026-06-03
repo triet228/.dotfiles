@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+payload="$(cat)"
+
+title="$(printf '%s' "$payload" | jq -r '.title // "Codex"')"
+message="$(printf '%s' "$payload" | jq -r '.message // .body // tostring')"
+
+curl -fsS \
+  -H "Title: $title" \
+  -H "Priority: default" \
+  -d "$message" \
+  https://ntfy.sh/triet-codex-9f3a7b2c >/dev/null

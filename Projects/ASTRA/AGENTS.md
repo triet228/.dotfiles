@@ -1,5 +1,8 @@
-"tests" mean keep working until these are passing:
-- ruff format .
-- ruff check .
-- pytest
-- astra/main.py
+- "tests pass" mean keep working until these are passing:
+    - ruff format .
+    - ruff check .
+    - pytest
+    - python -m astra
+
+
+

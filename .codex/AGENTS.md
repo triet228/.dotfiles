@@ -2,4 +2,11 @@
 - Do not use type annotations (e.g., def add(x: int, y: int) -> int). Remove them if they already exist.
 - "commit message" means: git add . && git commit -m "<message>" && git push
 - "git clean" means: git clean -xfd -e AGENTS.md
-- "docs" means: understands the repo, check if doccumentation need any update or change, implement them
+- "docs" means: understands the repo, check if doccumentation need any update or change, implement them, do not commit
+- "comment" means: look over all comments in the code and fix the very very very obvious wrong comments
+- "restore ...", "get rid of ...", and "rename ... to ..." implicitly imply to fix path dependency for other files if needed
+- "notify" means: send a short phone notification summarizing what was done using: `curl -fsS -H "Title: Codex finished" -d "<1 sentence summary of what was done>" https://ntfy.sh/triet-codex-9f3a7b2c`
+- Before running `python ...`, remove old generated output/log/result files if they cause duplicate or stale output. Do not delete source files, config files, input data, or `AGENTS.md`
+- Use `.gitkeep` for empty directories; remove it once the directory contains tracked files.
+- 1st line in python file is comment show file path from project root. Example: ~/Projects/ASTRA/astra/main.py => # astra/main.py
+- "cleanup" means: load prompt with cat ~/.codex/prompts/cleanup.md
