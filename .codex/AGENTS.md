@@ -1,0 +1,5 @@
+- Commit always go together with push. Always git push after commit.
+- Do not use type annotations (e.g., def add(x: int, y: int) -> int). Remove them if they already exist.
+- "commit message" means: git add . && git commit -m "<message>" && git push
+- "git clean" means: git clean -xfd -e AGENTS.md
+- "docs" means: understands the repo, check if doccumentation need any update or change, implement them
