@@ -1,3 +1,5 @@
+- If it's the first message, explore what the repo is.
+
 - "commit": If previous task fails or needs external help, stop. Otherwise, do git add . && git commit -m "<message>" && git push. <message> is specify with "commit <message>". Otherwise, summarize in less than 8 words.
 
 - "git clean" means: git clean -xfd -e AGENTS.md
@@ -19,3 +21,5 @@
 - FAST means Future Aircraft Sizing Tool (FAST) by The IDEAS Lab in the Aerospace Engineering Department at the University of Michigan
 
 -  "comment" means: look over all comments in the code and fix the very very very obvious wrong comments. Add clear functional comments and docstrings explaining purpose, inputs, outputs, assumptions, units, side effects, and non-obvious implementation decisions; explain why, not what. Commit comments.
+
+- "dir" means: show full directory hierarchy

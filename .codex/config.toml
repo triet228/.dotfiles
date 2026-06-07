@@ -1,0 +1,76 @@
+service_tier = "fast"
+model = "gpt-5.5"
+model_reasoning_effort = "medium"
+plan_mode_reasoning_effort = "medium"
+approval_policy = "never"
+approvals_reviewer = "user"
+sandbox_mode = "danger-full-access"
+
+[marketplaces.openai-bundled]
+last_updated = "2026-06-05T15:13:52Z"
+source_type = "local"
+source = '\\?\C:\Users\homin\.codex\.tmp\bundled-marketplaces\openai-bundled'
+
+[marketplaces.openai-primary-runtime]
+last_updated = "2026-06-04T09:26:56Z"
+source_type = "local"
+source = '\\?\C:\Users\homin\.cache\codex-runtimes\codex-primary-runtime\plugins\openai-primary-runtime'
+
+[plugins."browser@openai-bundled"]
+enabled = true
+
+[plugins."documents@openai-primary-runtime"]
+enabled = true
+
+[plugins."spreadsheets@openai-primary-runtime"]
+enabled = true
+
+[plugins."presentations@openai-primary-runtime"]
+enabled = true
+
+[features]
+js_repl = false
+
+[mcp_servers.node_repl]
+args = []
+command = 'C:\Users\homin\AppData\Local\OpenAI\Codex\bin\34ab3e1324cc55b5\node_repl.exe'
+startup_timeout_sec = 120
+
+[mcp_servers.node_repl.env]
+NODE_REPL_NATIVE_PIPE_CONNECT_TIMEOUT_MS = "1000"
+NODE_REPL_NODE_MODULE_DIRS = ""
+NODE_REPL_NODE_PATH = 'C:\Users\homin\AppData\Local\OpenAI\Codex\bin\5b9024f90663758b\node.exe'
+NODE_REPL_TRUSTED_CODE_PATHS = 'C:\Users\homin\.codex'
+CODEX_HOME = 'C:\Users\homin\.codex'
+NODE_REPL_TRUSTED_BROWSER_CLIENT_SHA256S = "a0dc4b6aaefe6a6a82d9a34fb524e77df6e0bf71387f0d4760157a46f52e6a93,e13c388c2427308a68dffc803e1f28316077b719672e4518a621ae6ab56ad7cf"
+BROWSER_USE_AVAILABLE_BACKENDS = "chrome,iab"
+NODE_REPL_INSTRUCTIONS_USE_CASE_BROWSER = "Control the in-app browser in conjunction with the Browser Plugin."
+NODE_REPL_INSTRUCTIONS_USE_CASE_CHROME = "Control the Chrome browser in conjunction with the Chrome Plugin. Prefer this method of controlling Chrome over alternatives (such as Computer Use) unless the user explicitly mentions an alternative."
+BROWSER_USE_CODEX_APP_BUILD_FLAVOR = "prod"
+BROWSER_USE_CODEX_APP_VERSION = "26.602.30954"
+CODEX_CLI_PATH = 'C:\Users\homin\AppData\Local\OpenAI\Codex\bin\fb2111b91430cb17\codex.exe'
+
+[desktop]
+conversationDetailMode = "STEPS_COMMANDS"
+ambient-suggestions-enabled = true
+
+[windows]
+sandbox = "elevated"
+
+[projects.'c:\users\homin\projects\astra']
+trust_level = "trusted"
+
+[projects.'c:\users\homin\documents\codex\2026-06-04\run-astra']
+trust_level = "trusted"
+
+[projects.'c:\users\homin\projects\fast_api']
+trust_level = "trusted"
+
+[projects.'c:\users\homin\projects\fast_api\fast-python-wrapper']
+trust_level = "trusted"
+
+[projects.'c:\users\homin\projects\fast-python-wrapper']
+trust_level = "trusted"
+
+[tui.model_availability_nux]
+"gpt-5.5" = 4
