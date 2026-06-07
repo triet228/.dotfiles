@@ -4,5 +4,5 @@
     - pytest
     - python -m astra
 
-
+Use conda activate astra for vir env
 
