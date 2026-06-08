@@ -50,19 +50,8 @@ cd $HOME\Projects\.dotfiles
 ```
 
 Back up the original files. Delete dotfiles you want to symlink.  
-Run PowerShell as Administrator to create the symlink for:
+Run PowerShell as Administrator to create the symlink for AGENTS.md:
 
-Codex `AGENTS.md`
 ```powershell
-New-Item -ItemType SymbolicLink -Path "$HOME\.codex\AGENTS.md" -Target "$HOME\Projects\.dotfiles\.codex\AGENTS.md"
-```
-
-Codex config
-```powershell
-New-Item -ItemType SymbolicLink -Path "$HOME\.codex\config.toml" -Target "$HOME\Projects\.dotfiles\.codex\config.toml"
-```
-
-Local `AGENTS.md`
-```powershell
-New-Item -ItemType SymbolicLink -Path "$HOME\Projects\ASTRA\AGENTS.md" -Target "$HOME\Projects\.dotfiles\Projects\ASTRA\AGENTS.md"
+New-Item -ItemType SymbolicLink -Path "$HOME\.codex\AGENTS.md" -Target "$HOME\Projects\.dotfiles\.codex\AGENTS.md"; New-Item -ItemType SymbolicLink -Path "$HOME\Projects\ASTRA\AGENTS.md" -Target "$HOME\Projects\.dotfiles\Projects\ASTRA\AGENTS.md"
 ```
