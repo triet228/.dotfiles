@@ -1,6 +1,4 @@
-- If it's the first message, explore what the repo is.
-
-- "commit": If previous task fails or needs external help, stop. Otherwise, do git add . && git commit -m "<message>" && git push. <message> is specify with "commit <message>". Otherwise, summarize in less than 8 words.
+- "commit": If previous task fails or needs external help, stop. Do not commit temp files. Otherwise, do git add . && git commit -m "<message>" && git push. <message> is specify with "commit <message>". Otherwise, summarize in less than 8 words.
 
 - "git clean" means: git clean -xfd -e AGENTS.md
 
@@ -16,10 +14,20 @@
 
 - Use `.gitkeep` for empty directories; remove `.gitkeep` it once the directory contains git tracked files.
 
-- 2nd line is empty, 1st line in python file, .env.example, json file is comment show file path from project root. Example: ~/Projects/ASTRA/astra/main.py => # astra/main.py
+- 1st line in python file, .env.example should be comment show file path from project root. Example: ~/Projects/ASTRA/astra/main.py => # astra/main.py  2nd line is empty,
 
 - FAST means Future Aircraft Sizing Tool (FAST) by The IDEAS Lab in the Aerospace Engineering Department at the University of Michigan
 
--  "comment" means: look over all comments in the code and fix the very very very obvious wrong comments. Add clear functional comments and docstrings explaining purpose, inputs, outputs, assumptions, units, side effects, and non-obvious implementation decisions; explain why, not what. Commit comments.
+-  "comment" means: look over all comments in the code and fix the very very very obvious wrong comments. Add clear functional comments and docstrings explaining purpose, inputs, outputs, assumptions, units, side effects, and non-obvious implementation decisions; explain why, not what. Do not commit.
 
 - "dir" means: show full directory hierarchy
+
+- Don't edit code until I tell u to do so
+
+- Use conda env match with the project name but in lower case (example: FINCH use conda env finch with conda run -n finch python ..., ASTRA use astra with conda run -n astra python ...). 
+
+- Do not do bulk test unless I tell you
+
+
+- Do not have file path comment on first line for files that are not Python.
+

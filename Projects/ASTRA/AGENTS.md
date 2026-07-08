@@ -4,5 +4,6 @@
     - pytest
     - python -m astra
 
-Use conda activate astra for vir env
+vir env: & C:/Users/homin/.conda/envs/astra/python.exe
+
 
