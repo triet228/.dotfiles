@@ -54,6 +54,9 @@ Run PowerShell as Administrator to create the symlink for AGENTS.md:
 
 ```powershell
 New-Item -ItemType SymbolicLink -Path "$HOME\.codex\AGENTS.md" -Target "$HOME\Projects\.dotfiles\.codex\AGENTS.md"
+
+New-Item -ItemType SymbolicLink -Path "$HOME\.vimrc" -Target "$HOME\Projects\.dotfiles\.vimrc"
+
 $projectRoot = "$HOME\Projects\.dotfiles\Projects"
 Get-ChildItem $projectRoot -Recurse -Filter AGENTS.md -File | ForEach-Object {
     $relativePath = $_.FullName.Substring($projectRoot.Length).TrimStart("\")
