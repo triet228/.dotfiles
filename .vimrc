@@ -154,9 +154,6 @@ augroup latex_settings
   " tab to accept spell check
   autocmd filetype tex noremap <buffer> <tab> 1z=lw
 
-  " Ctrl + S to compile Latex
-  autocmd FileType tex nnoremap <buffer> <C-s> <Esc> :w \| !tectonic % <CR><BS>
-
 augroup END
 
 
@@ -226,7 +223,6 @@ augroup cpp_settings
   " Compile and run C++ code with F5
   autocmd FileType cpp,c nnoremap <buffer> <F5> :w <bar> !g++ % && ./a.out <CR>
 augroup END
-
 
 
 

@@ -4,8 +4,6 @@ command -v kitty >/dev/null && kitty &
 command -v firefox >/dev/null && firefox &
 command -v slstatus >/dev/null && slstatus &
 command -v keepassxc >/dev/null && keepassxc --allow-screencapture &
-command -v ferdium >/dev/null && ferdium &
 command -v xset >/dev/null && xset -b &
 command -v xrandr >/dev/null && xrandr --auto &
-command -v teams-for-linux >/dev/null && teams-for-linux &
 exec dwm
