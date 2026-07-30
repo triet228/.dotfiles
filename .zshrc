@@ -181,6 +181,7 @@ alias da='z ~/Data/ && ls'
 alias c='z ~/Data/CLASSES && ls'
 
 # System & Utilities
+alias yay='yay --noconfirm'
 alias update='yay -Syu --noconfirm'
 alias sleepp='slock & systemctl suspend'
 alias math='qalc'
