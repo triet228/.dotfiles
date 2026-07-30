@@ -1,13 +1,11 @@
-setxkbmap -option caps:swapescape &
-sxhkd &
-sudo systemctl start tailscaled &
-kitty & 
-firefox & 
-slstatus &
-keepassxc --allow-screencapture &
-ferdium &
-sudo systemctl restart tailscaled &
-xset -b &
-xrandr --output DP-0 --off --output DP-1 --off --output HDMI-0 --mode 1920x1080 --pos 0x0 --rotate normal --output DP-2 --off
-teams-for-linux
+command -v setxkbmap >/dev/null && setxkbmap -option caps:swapescape &
+command -v sxhkd >/dev/null && sxhkd &
+command -v kitty >/dev/null && kitty &
+command -v firefox >/dev/null && firefox &
+command -v slstatus >/dev/null && slstatus &
+command -v keepassxc >/dev/null && keepassxc --allow-screencapture &
+command -v ferdium >/dev/null && ferdium &
+command -v xset >/dev/null && xset -b &
+command -v xrandr >/dev/null && xrandr --auto &
+command -v teams-for-linux >/dev/null && teams-for-linux &
 exec dwm

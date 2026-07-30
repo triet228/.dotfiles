@@ -252,7 +252,7 @@ clean() {
   sudo rm -rf /tmp/*
   git --git-dir=$HOME/.dotfiles/.git --work-tree=$HOME/.dotfiles pull
   clear
-  neofetch
+  command -v fastfetch >/dev/null 2>&1 && fastfetch
 }
 
 # If a command is not found, try to open it as a file
@@ -292,5 +292,5 @@ compress() {
   done
 }
 
-# Print out cat at the start of shell
-neofetch
+# Print system info at the start of shell
+command -v fastfetch >/dev/null 2>&1 && fastfetch
