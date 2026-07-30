@@ -8,6 +8,13 @@ source $VIMRUNTIME/defaults.vim
 " No temp file
 set noswapfile
 
+" Reload unchanged buffers when files are updated outside Vim.
+set autoread
+augroup auto_reload_files
+  autocmd!
+  autocmd FocusGained,BufEnter,CursorHold,CursorHoldI * checktime
+augroup END
+
 " Theme
 colorscheme torte
 
@@ -223,7 +230,6 @@ augroup cpp_settings
   " Compile and run C++ code with F5
   autocmd FileType cpp,c nnoremap <buffer> <F5> :w <bar> !g++ % && ./a.out <CR>
 augroup END
-
 
 
 
