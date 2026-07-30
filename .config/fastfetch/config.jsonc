@@ -1,0 +1,50 @@
+{
+  "$schema": "https://github.com/fastfetch-cli/fastfetch/raw/dev/doc/json_schema.json",
+  "logo": {
+    "source": "~/.config/fastfetch/Triet_cat.txt"
+  },
+  "display": {
+    "separator": ": "
+  },
+  "modules": [
+    "title",
+    "separator",
+    "os",
+    "host",
+    {
+      "type": "kernel",
+      "format": "{release}"
+    },
+    "uptime",
+    {
+      "type": "packages",
+      "combined": false
+    },
+    "shell",
+    {
+      "type": "display",
+      "compactType": "original",
+      "key": "Resolution"
+    },
+    "de",
+    "wm",
+    "terminal",
+    "terminalfont",
+    "cpu",
+    {
+      "type": "gpu",
+      "key": "GPU",
+      "format": "{name}"
+    },
+    {
+      "type": "memory",
+      "format": "{used} / {total}"
+    },
+    {
+      "type": "disk",
+      "folders": "/"
+    },
+    "battery",
+    "colors"
+  ]
+}
