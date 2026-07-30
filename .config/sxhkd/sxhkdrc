@@ -1,7 +1,7 @@
 
 # Take screenshot 
 shift + super + s
-    file="$HOME/Pictures/picture$(date +%Y%m%d-%H%M%S).png"; maim -s -u "$file" && xclip -selection clipboard -t image/png -i "$file"
+    i=1; while [ -e "$(printf "$HOME/Pictures/screenshot_%04d.png" "$i")" ]; do i=$((i+1)); done; file="$(printf "$HOME/Pictures/screenshot_%04d.png" "$i")"; maim -s -u "$file" && xclip -selection clipboard -t image/png -i "$file"
 
 # Lock
 super + l
@@ -13,7 +13,7 @@ shift + super + l
 
 # Full screenshot
 Print
-    file="$HOME/Pictures/picture$(date +%Y%m%d-%H%M%S).png"; maim -u "$file" && xclip -selection clipboard -t image/png -i "$file"
+    i=1; while [ -e "$(printf "$HOME/Pictures/full_screen_%04d.png" "$i")" ]; do i=$((i+1)); done; file="$(printf "$HOME/Pictures/full_screen_%04d.png" "$i")"; maim -u "$file" && xclip -selection clipboard -t image/png -i "$file"
     
 # Increase volume
 XF86AudioRaiseVolume
