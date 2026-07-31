@@ -28,11 +28,10 @@
 
 - Do not do bulk test unless I tell you
 
-
 - Do not have file path comment on first line for files that are not Python.
-
 
 - "legacy" means: get rid of legacy stuff if u still have them.
 
 - When I try to delete a feature, also get rid of any legacy stuff if u still have them rather than preserving half-migrated behavior.
+
 - When I say add to my calendar: look for the relevant `*.ics` file in `~/Downloads`, then use `gcalcli` to import it into `"Personal Calendar"`. Example: gcalcli --calendar "Personal Calendar" import "~\Downloads\ical_feed.cleaned.ics"
