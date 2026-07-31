@@ -1,0 +1,9 @@
+.local/bin/identify-cli
+.local/bin/nodeenv
+.local/bin/pre-commit
+.local/bin/ruff
+.local/bin/uv
+.local/bin/uvx
+.local/bin/virtualenv
+__pycache__/
+*.py[cod]
