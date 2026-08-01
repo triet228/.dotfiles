@@ -6,4 +6,5 @@ command -v firefox >/dev/null && firefox &
 command -v slstatus >/dev/null && slstatus &
 command -v keepassxc >/dev/null && keepassxc --allow-screencapture &
 command -v xset >/dev/null && xset -b &
+command -v copyq >/dev/null && copyq &
 exec dwm
