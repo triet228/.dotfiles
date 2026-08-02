@@ -124,20 +124,13 @@ bindkey '^H' fzf_file_from_home
 eval "$(zoxide init zsh)"
 eval "$(direnv hook zsh)"
 
-# >>> conda initialize >>>
-# !! Contents within this block are managed by 'conda init' !!
-__conda_setup="$('/opt/miniconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
-if [ $? -eq 0 ]; then
-    eval "$__conda_setup"
+# Load Conda's shell functions without starting Conda's Python process on every
+# new terminal. Environments remain available through `conda activate <name>`.
+if [[ -f /opt/miniconda3/etc/profile.d/conda.sh ]]; then
+  source /opt/miniconda3/etc/profile.d/conda.sh
 else
-    if [ -f "/opt/miniconda3/etc/profile.d/conda.sh" ]; then
-        . "/opt/miniconda3/etc/profile.d/conda.sh"
-    else
-        export PATH="/opt/miniconda3/bin:$PATH"
-    fi
+  export PATH="/opt/miniconda3/bin:$PATH"
 fi
-unset __conda_setup
-# <<< conda initialize <<<
 
 # Load local/private configs if they exist
 [[ -f ~/.zshrc.local ]] && source ~/.zshrc.local
