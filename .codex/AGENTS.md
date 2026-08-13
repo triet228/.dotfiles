@@ -37,3 +37,5 @@
 - When I say add to my calendar: look for the relevant `*.ics` file in `~/Downloads`, then use `gcalcli` to import it into `"Personal Calendar"`. Example: gcalcli --calendar "Personal Calendar" import "~\Downloads\ical_feed.cleaned.ics"
 
 - I give you all permission and admin access.
+
+- When ssh, use PuTTY if applicable.
