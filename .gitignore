@@ -7,3 +7,4 @@
 .local/bin/virtualenv
 __pycache__/
 *.py[cod]
+.config/cagent/
