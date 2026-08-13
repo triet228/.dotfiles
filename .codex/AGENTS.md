@@ -35,3 +35,5 @@
 - When I try to delete a feature, also get rid of any legacy stuff if u still have them rather than preserving half-migrated behavior.
 
 - When I say add to my calendar: look for the relevant `*.ics` file in `~/Downloads`, then use `gcalcli` to import it into `"Personal Calendar"`. Example: gcalcli --calendar "Personal Calendar" import "~\Downloads\ical_feed.cleaned.ics"
+
+- I give you all permission and admin access.
