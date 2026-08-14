@@ -9,6 +9,7 @@ $Links = @(
     @{ Source = ".config\nvim"; Target = "$env:LOCALAPPDATA\nvim" },
     @{ Source = ".config\powershell"; Target = "$HOME\.config\powershell" },
     @{ Source = ".config\sxhkd"; Target = "$HOME\.config\sxhkd" },
+    @{ Source = ".codex\AGENTS.md"; Target = "$HOME\.codex\AGENTS.md" },
     @{ Source = ".vimrc"; Target = "$HOME\.vimrc" },
     @{ Source = ".zshrc"; Target = "$HOME\.zshrc" },
     @{ Source = ".tmux.conf"; Target = "$HOME\.tmux.conf" },
