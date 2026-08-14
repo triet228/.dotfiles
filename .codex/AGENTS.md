@@ -12,6 +12,8 @@
 
 - Before running `python ...`, remove old generated output/log/result files if they cause duplicate or stale output.
 
+- When running terminal commands such as `python`, `pip`, or similar tools, prefer to let the terminal output print instead of silencing or redirecting it unless there is a clear reason.
+
 - Use `.gitkeep` for empty directories; remove `.gitkeep` it once the directory contains git tracked files.
 
 - 1st line in python file, .env.example should be comment show file path from project root. Example: ~/Projects/ASTRA/astra/main.py => # astra/main.py  2nd line is empty,

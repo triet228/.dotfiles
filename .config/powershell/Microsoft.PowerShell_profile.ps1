@@ -8,7 +8,9 @@ $env:OLLAMA_HOST = "http://100.65.249.113:11434"
 $Dotfiles = Join-Path $HOME "Projects\.dotfiles"
 $LocalBin = Join-Path $HOME ".local\bin"
 $RepoLocalBin = Join-Path $Dotfiles ".local\bin"
-foreach ($PathToAdd in @($LocalBin, $RepoLocalBin, "$HOME\miniconda3\condabin", "$HOME\miniconda3\Scripts", "$HOME\miniconda3", "C:\Program Files\Neovim\bin")) {
+$HugoBin = Get-ChildItem "$env:LOCALAPPDATA\Microsoft\WinGet\Packages" -Recurse -Filter hugo.exe -ErrorAction SilentlyContinue |
+    Select-Object -First 1 -ExpandProperty DirectoryName
+foreach ($PathToAdd in @($LocalBin, $RepoLocalBin, "$HOME\miniconda3\condabin", "$HOME\miniconda3\Scripts", "$HOME\miniconda3", "C:\Program Files\Neovim\bin", "C:\Program Files\Go\bin", $HugoBin)) {
     if ((Test-Path $PathToAdd) -and (($env:Path -split ";") -notcontains $PathToAdd)) {
         $env:Path = "$PathToAdd;$env:Path"
     }
@@ -50,14 +52,30 @@ function Invoke-FzfCd {
     }
 }
 
-if (Get-Command fzf -ErrorAction SilentlyContinue) {
-    Set-PSReadLineKeyHandler -Key Ctrl+t -ScriptBlock { Invoke-FzfFileInsert }
-    Set-PSReadLineKeyHandler -Key Ctrl+h -ScriptBlock { Invoke-FzfFileFromHome }
-    Set-PSReadLineKeyHandler -Key Alt+c -ScriptBlock { Invoke-FzfCd }
+function Invoke-FzfHistory {
+    $historyPath = (Get-PSReadLineOption).HistorySavePath
+    if (-not (Test-Path $historyPath)) { return }
+
+    $line = $null
+    $cursor = 0
+    [Microsoft.PowerShell.PSConsoleReadLine]::GetBufferState([ref]$line, [ref]$cursor)
+
+    $selected = Get-Content $historyPath |
+        Where-Object { $_.Trim() } |
+        Select-Object -Unique |
+        fzf --tac --no-sort --query $line
+
+    if ($selected) {
+        [Microsoft.PowerShell.PSConsoleReadLine]::RevertLine()
+        [Microsoft.PowerShell.PSConsoleReadLine]::Insert($selected)
+    }
 }
 
-if (Get-Command zoxide -ErrorAction SilentlyContinue) {
-    Invoke-Expression (& zoxide init powershell --cmd z | Out-String)
+if (Get-Command fzf -ErrorAction SilentlyContinue) {
+    Set-PSReadLineKeyHandler -Key Ctrl+t -ScriptBlock { Invoke-FzfFileInsert }
+    Set-PSReadLineKeyHandler -Key Ctrl+r -ViMode Insert -ScriptBlock { Invoke-FzfHistory }
+    Set-PSReadLineKeyHandler -Key Ctrl+h -ScriptBlock { Invoke-FzfFileFromHome }
+    Set-PSReadLineKeyHandler -Key Alt+c -ScriptBlock { Invoke-FzfCd }
 }
 
 $CondaHook = Join-Path $HOME "miniconda3\shell\condabin\conda-hook.ps1"
@@ -210,6 +228,10 @@ function global:prompt {
     Write-Host "]" -NoNewline -ForegroundColor Yellow
     if ($git) { Write-Host $git -NoNewline -ForegroundColor Magenta }
     if ($path.Length -gt 20) { "`n>> " } else { "$ " }
+}
+
+if (Get-Command zoxide -ErrorAction SilentlyContinue) {
+    Invoke-Expression (& zoxide init powershell --cmd z | Out-String)
 }
 
 if (Test-Command fastfetch) {
