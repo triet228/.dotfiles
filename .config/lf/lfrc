@@ -1,14 +1,10 @@
-# Visual setting
 set drawbox true
 set icons true
 set preview true
-set previewer ~/.config/lf/previewer
-set cleaner ~/.config/lf/cleaner
+set previewer C:/Users/triet/.config/lf/previewer.cmd
 
-# Shortcut
-map . set hidden!
-map DD %trash-put "$f"
-
-# Sort by file type and directory
 set sortby ext
 set dirfirst true
+
+map . set hidden!
+map DD %Remove-Item -LiteralPath "$env:f" -Recurse -Force

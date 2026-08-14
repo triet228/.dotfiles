@@ -68,6 +68,35 @@ if (Test-Path $CondaHook) {
     function global:conda { & $CondaBat @args }
 }
 
+function global:Test-Command {
+    param($Name)
+    [bool](Get-Command $Name -ErrorAction SilentlyContinue)
+}
+
+function global:Send-ToTrash {
+    param([Parameter(ValueFromPipeline = $true, ValueFromRemainingArguments = $true)]$Path)
+    begin {
+        Add-Type -AssemblyName Microsoft.VisualBasic
+    }
+    process {
+        foreach ($item in $Path) {
+            if ([string]::IsNullOrWhiteSpace($item)) { continue }
+            $resolved = Resolve-Path -LiteralPath $item -ErrorAction SilentlyContinue
+            if (-not $resolved) {
+                Write-Warning "Not found: $item"
+                continue
+            }
+            foreach ($r in $resolved) {
+                if (Test-Path -LiteralPath $r.Path -PathType Container) {
+                    [Microsoft.VisualBasic.FileIO.FileSystem]::DeleteDirectory($r.Path, "OnlyErrorDialogs", "SendToRecycleBin")
+                } else {
+                    [Microsoft.VisualBasic.FileIO.FileSystem]::DeleteFile($r.Path, "OnlyErrorDialogs", "SendToRecycleBin")
+                }
+            }
+        }
+    }
+}
+
 function global:vim { nvim @args }
 function global:vi { nvim @args }
 function global:open { Invoke-Item @args }
@@ -87,25 +116,12 @@ function global:cptd {
 function global:mvfd { Move-Item "$HOME\Downloads\*" . }
 function global:mvtd { Move-Item @args -Destination "$HOME\Downloads" }
 
-function global:trash {
-    param([Parameter(ValueFromRemainingArguments = $true)][string[]]$Path)
-    Add-Type -AssemblyName Microsoft.VisualBasic
-    foreach ($item in $Path) {
-        $resolved = Resolve-Path -LiteralPath $item -ErrorAction SilentlyContinue
-        if (-not $resolved) {
-            Write-Warning "Not found: $item"
-            continue
-        }
-        foreach ($r in $resolved) {
-            if (Test-Path -LiteralPath $r.Path -PathType Container) {
-                [Microsoft.VisualBasic.FileIO.FileSystem]::DeleteDirectory($r.Path, "OnlyErrorDialogs", "SendToRecycleBin")
-            } else {
-                [Microsoft.VisualBasic.FileIO.FileSystem]::DeleteFile($r.Path, "OnlyErrorDialogs", "SendToRecycleBin")
-            }
-        }
-    }
-}
+function global:trash { Send-ToTrash @args }
 function global:trash-put { trash @args }
+
+function global:clean {
+    & (Join-Path $RepoLocalBin "clean.ps1") @args
+}
 
 function global:lff {
     $tmp = [System.IO.Path]::GetTempFileName()
@@ -119,7 +135,7 @@ function global:lff {
 }
 
 function global:compress {
-    param([Parameter(ValueFromRemainingArguments = $true)][string[]]$Files)
+    param([Parameter(ValueFromRemainingArguments = $true)]$Files)
     if (-not $Files) {
         Write-Host "Usage: compress <file1.pdf> [file2.pdf] ..."
         return
@@ -142,27 +158,36 @@ Remove-Item Alias:ls -Force -ErrorAction SilentlyContinue
 Remove-Item Alias:cd -Force -ErrorAction SilentlyContinue
 
 function global:ls {
-    if (Get-Command eza -ErrorAction SilentlyContinue) {
+    if (Test-Command eza) {
         eza -l --sort=ext --icons --group-directories-first --time-style=long-iso --git --no-permissions --no-user @args
     } else {
         Get-ChildItem @args
     }
 }
 function global:ll {
-    if (Get-Command eza -ErrorAction SilentlyContinue) {
+    if (Test-Command eza) {
         eza -la --sort=ext --icons --group-directories-first --time-style=long-iso --git @args
     } else {
         Get-ChildItem -Force @args
     }
 }
-function global:lss { eza --icons --tree --level=2 --group-directories-first @args }
-function global:lsss { eza --icons --tree --level=3 --group-directories-first @args }
-function global:lssss { eza --icons --tree --level=4 --group-directories-first @args }
-function global:lsssss { eza --icons --tree --level=5 --group-directories-first @args }
-function global:lssssss { eza --icons --tree --level=6 --group-directories-first @args }
-function global:lsssssss { eza --icons --tree --level=7 --group-directories-first @args }
-function global:lssssssss { eza --icons --tree --level=8 --group-directories-first @args }
-function global:lsssssssss { eza --icons --tree --level=9 --group-directories-first @args }
+
+function global:Invoke-TreeList {
+    param($Level)
+    if (Test-Command eza) {
+        eza --icons --tree --level=$Level --group-directories-first @args
+    } else {
+        Get-ChildItem -Recurse -Depth $Level @args
+    }
+}
+function global:lss { Invoke-TreeList 2 @args }
+function global:lsss { Invoke-TreeList 3 @args }
+function global:lssss { Invoke-TreeList 4 @args }
+function global:lsssss { Invoke-TreeList 5 @args }
+function global:lssssss { Invoke-TreeList 6 @args }
+function global:lsssssss { Invoke-TreeList 7 @args }
+function global:lssssssss { Invoke-TreeList 8 @args }
+function global:lsssssssss { Invoke-TreeList 9 @args }
 
 function global:cd {
     if ($args.Count -eq 0) { Set-Location $HOME }
@@ -187,6 +212,6 @@ function global:prompt {
     if ($path.Length -gt 20) { "`n>> " } else { "$ " }
 }
 
-if (Get-Command fastfetch -ErrorAction SilentlyContinue) {
+if (Test-Command fastfetch) {
     fastfetch
 }
