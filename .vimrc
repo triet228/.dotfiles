@@ -33,6 +33,14 @@ set expandtab
 set belloff=all
 set mouse=
 
+" Prefer Unix line endings and convert files to LF on save.
+set fileformats=unix,dos
+set fileformat=unix
+augroup unix_line_endings
+  autocmd!
+  autocmd BufWritePre * setlocal fileformat=unix
+augroup END
+
 nnoremap d "_d
 nnoremap dd "_dd
 nnoremap x "_x

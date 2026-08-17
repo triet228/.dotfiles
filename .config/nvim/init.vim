@@ -211,6 +211,10 @@ EOF
 
 set fileformats=unix,dos
 set fileformat=unix
+augroup unix_line_endings
+  autocmd!
+  autocmd BufWritePre * setlocal fileformat=unix
+augroup END
 
 
 " ============================================================
