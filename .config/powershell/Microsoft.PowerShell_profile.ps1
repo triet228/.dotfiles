@@ -31,6 +31,18 @@ if ($HasPSReadLinePrediction) {
 }
 Set-PSReadLineKeyHandler -Key Ctrl+f -Function Complete
 Set-PSReadLineKeyHandler -Key Ctrl+a -Function SelectAll
+Set-PSReadLineKeyHandler -Key Enter -ScriptBlock {
+    $line = $null
+    $cursor = 0
+    [Microsoft.PowerShell.PSConsoleReadLine]::GetBufferState([ref]$line, [ref]$cursor)
+
+    if ($line -match '^\s*clean(\s|$)') {
+        [Microsoft.PowerShell.PSConsoleReadLine]::RevertLine()
+        [Microsoft.PowerShell.PSConsoleReadLine]::Insert("& $line")
+    }
+
+    [Microsoft.PowerShell.PSConsoleReadLine]::AcceptLine()
+}
 
 function Invoke-FzfFileInsert {
     $cmd = if (Get-Command fd -ErrorAction SilentlyContinue) { { fd --type f --hidden --follow --exclude .git } } else { { Get-ChildItem -Recurse -File -Force -ErrorAction SilentlyContinue | ForEach-Object FullName } }
