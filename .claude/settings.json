@@ -1,6 +1,7 @@
 {
   "permissions": {
-    "defaultMode": "bypassPermissions"
+    "defaultMode": "bypassPermissions",
+    "deny": ["AskUserQuestion"]
   },
   "model": "sonnet",
   "effortLevel": "medium"
