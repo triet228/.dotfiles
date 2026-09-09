@@ -26,7 +26,7 @@
 
 - Don't edit code until I tell u to do so
 
-- Use conda env match with the project name but in lower case (example: FINCH use conda env finch with conda run -n finch python ..., ASTRA use astra with conda run -n astra python ...). 
+- Use conda env match with the project name but in lower case (example: FINCH use conda env finch with conda run -n finch python ..., ASTRA use astra with conda run -n astra python ...).
 
 - Do not do bulk test unless I tell you
 
@@ -41,3 +41,5 @@
 - I give you all permission and admin access.
 
 - When ssh, use PuTTY if applicable.
+
+- Some possible relevant dir are at ~/Projects/ such as /.dotfiles/ and /trietho.com/

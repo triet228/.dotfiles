@@ -10,7 +10,6 @@ $Links = @(
     @{ Source = ".config\powershell"; Target = "$HOME\.config\powershell" },
     @{ Source = ".config\sxhkd"; Target = "$HOME\.config\sxhkd" },
     @{ Source = ".codex\AGENTS.md"; Target = "$HOME\.codex\AGENTS.md" },
-    @{ Source = ".codex\AGENTS.md"; Target = "$Repo\.claude\CLAUDE.md" },
     @{ Source = ".codex\AGENTS.md"; Target = "$HOME\.claude\CLAUDE.md" },
     @{ Source = ".claude\settings.json"; Target = "$HOME\.claude\settings.json" },
     @{ Source = ".vimrc"; Target = "$HOME\.vimrc" },
@@ -49,9 +48,26 @@ function Test-SameFile {
         return $false
     }
 
-    $LeftInfo = Get-Item -LiteralPath $Left -Force
-    $RightInfo = Get-Item -LiteralPath $Right -Force
-    return $LeftInfo.Length -eq $RightInfo.Length -and $LeftInfo.LastWriteTimeUtc -eq $RightInfo.LastWriteTimeUtc
+    if (-not (Test-Path -LiteralPath $Left -PathType Leaf) -or -not (Test-Path -LiteralPath $Right -PathType Leaf)) {
+        return $false
+    }
+
+    return (Get-FileHash -LiteralPath $Left).Hash -eq (Get-FileHash -LiteralPath $Right).Hash
+}
+
+function Test-SameHardLink {
+    param($Left, $Right)
+
+    if (-not (Test-Path -LiteralPath $Left -PathType Leaf) -or -not (Test-Path -LiteralPath $Right -PathType Leaf)) {
+        return $false
+    }
+
+    $RightPath = [System.IO.Path]::GetFullPath($Right)
+    $RightRoot = [System.IO.Path]::GetPathRoot($RightPath)
+    $RightVolumePath = "\" + $RightPath.Substring($RightRoot.Length).TrimStart("\")
+    $HardLinks = @(& fsutil hardlink list $Left 2>$null)
+
+    return $HardLinks -contains $RightVolumePath
 }
 
 function Test-RoutesToSource {
@@ -83,6 +99,16 @@ foreach ($Link in $Links) {
     if (Test-Path -LiteralPath $Target) {
         $Item = Get-Item -LiteralPath $Target -Force
         $ExistingTarget = Get-LinkTarget $Item
+
+        if ($Item.LinkType -eq "HardLink" -and (Test-SameHardLink $Source $Target)) {
+            $AlreadyLinked += $Target
+            continue
+        }
+
+        if ($Item.LinkType -eq "HardLink") {
+            $Conflicts += "hard-linked elsewhere, left alone: $Target"
+            continue
+        }
 
         if ($Item.LinkType -and $ExistingTarget -eq $Source) {
             $AlreadyLinked += $Target

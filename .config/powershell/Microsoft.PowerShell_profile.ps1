@@ -5,12 +5,10 @@ $env:EZA_COLORS = "di=1;36:fi=0:ex=1;32:*.kdbx=1;37:da=38;5;250"
 $env:PYTHONWARNINGS = "ignore:OpenSSL 3's legacy provider failed to load"
 $env:OLLAMA_HOST = "http://100.65.249.113:11434"
 
-$Dotfiles = Join-Path $HOME "Projects\.dotfiles"
 $LocalBin = Join-Path $HOME ".local\bin"
-$RepoLocalBin = Join-Path $Dotfiles ".local\bin"
 $HugoBin = Get-ChildItem "$env:LOCALAPPDATA\Microsoft\WinGet\Packages" -Recurse -Filter hugo.exe -ErrorAction SilentlyContinue |
     Select-Object -First 1 -ExpandProperty DirectoryName
-foreach ($PathToAdd in @($LocalBin, $RepoLocalBin, "$HOME\miniconda3\condabin", "$HOME\miniconda3\Scripts", "$HOME\miniconda3", "C:\Program Files\Neovim\bin", "C:\Program Files\Go\bin", $HugoBin)) {
+foreach ($PathToAdd in @($LocalBin, "$HOME\miniconda3\condabin", "$HOME\miniconda3\Scripts", "$HOME\miniconda3", "C:\Program Files\Neovim\bin", "C:\Program Files\Go\bin", $HugoBin)) {
     if ((Test-Path $PathToAdd) -and (($env:Path -split ";") -notcontains $PathToAdd)) {
         $env:Path = "$PathToAdd;$env:Path"
     }
@@ -150,7 +148,7 @@ function global:trash { Send-ToTrash @args }
 function global:trash-put { trash @args }
 
 function global:clean {
-    & (Join-Path $RepoLocalBin "clean.ps1") @args
+    & (Join-Path $LocalBin "clean.ps1") @args
 }
 
 function global:lff {

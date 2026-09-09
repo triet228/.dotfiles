@@ -4,5 +4,6 @@
     "deny": ["AskUserQuestion"]
   },
   "model": "sonnet",
-  "effortLevel": "medium"
+  "effortLevel": "medium",
+  "skipWorkflowUsageWarning": true
 }

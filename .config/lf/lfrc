@@ -1,7 +1,7 @@
 set drawbox true
 set icons true
 set preview true
-set previewer C:/Users/triet/.config/lf/previewer.cmd
+set previewer ~/.config/lf/previewer.cmd
 
 set sortby ext
 set dirfirst true

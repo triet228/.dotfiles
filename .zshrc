@@ -1,12 +1,10 @@
-# ~/.zshrc
-
 # ------------------------------------------------------------------------------
 # ENVIRONMENT & EXPORTS
 # ------------------------------------------------------------------------------
 
 # Set default editor
-export EDITOR=vim
-export VISUAL=vim
+export EDITOR=nvim
+export VISUAL=nvim
 
 # Add local binaries to the path
 export PATH="$HOME/.local/bin:$PATH"
@@ -17,8 +15,8 @@ export EZA_COLORS="di=1;36:fi=0:ex=1;32:*.kdbx=1;37:da=38;5;250"
 # Supress warning for conda env
 export PYTHONWARNINGS="ignore:OpenSSL 3's legacy provider failed to load"
 
-# Ollama for Tailscale port
-export OLLAMA_HOST=http://100.65.249.113:11434
+# Ollama local server
+export OLLAMA_HOST=http://127.0.0.1:11434
 
 # ------------------------------------------------------------------------------
 # SHELL OPTIONS (setopt)
