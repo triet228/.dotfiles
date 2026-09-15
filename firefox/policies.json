@@ -1,0 +1,15 @@
+{
+  "policies": {
+    "Preferences": {
+      "browser.sessionstore.resume_from_crash": {
+        "Value": true,
+        "Status": "locked"
+      },
+      "browser.startup.page": {
+        "Value": 3,
+        "Status": "locked",
+        "Type": "number"
+      }
+    }
+  }
+}

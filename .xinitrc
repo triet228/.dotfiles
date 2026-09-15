@@ -15,7 +15,9 @@ run_once sxhkd
 run_once dunst
 run_once picom --daemon
 run_once copyq
-run_once keepassxc --allow-screencapture
+run_once keepassxc --allow-screencapture \
+    --keyfile "$HOME/.ssh/KeePassXC" \
+    "$HOME/Data/Passwords.kdbx"
 run_once kitty
 run_once github-desktop
 run_once firefox
@@ -28,11 +30,6 @@ fi
 if [ -x /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 ] && \
     ! pgrep -u "$USER" -f '/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1$' >/dev/null 2>&1; then
     /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
-fi
-
-if command -v xdotool >/dev/null 2>&1 && pgrep -u "$USER" -x keepassxc >/dev/null 2>&1; then
-    (xdotool search --sync --class KeePassXC >/dev/null && \
-        xdotool key --clearmodifiers alt+9 Return alt+1) &
 fi
 
 exec dwm

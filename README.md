@@ -15,7 +15,7 @@ cd .dotfiles
 ./setup-arch.sh
 ```
 
-The script installs required official and AUR packages, links the managed files, creates XDG user directories, and installs Neovim plugins. It is safe to rerun and refuses to overwrite conflicting files. Application state under `~/.codex`, `~/.claude`, and `~/.local/bin` remains outside the repository.
+The script installs required official and AUR packages, applies the Firefox policy that always restores the previous session, links the managed files, creates XDG user directories, and installs Neovim plugins. It is safe to rerun and refuses to overwrite conflicting files. Application state under `~/.codex`, `~/.claude`, and `~/.local/bin` remains outside the repository.
 
 Start the desktop from a TTY with `startx`, or select the dwm X11 session in the login manager. The X session starts sxhkd, dunst, picom, CopyQ, KeePassXC, Kitty, GitHub Desktop, and Firefox when available.
 
@@ -55,6 +55,7 @@ After pulling on another machine, rerun the appropriate setup command if new con
 - `.config/nvim/` and `.vimrc`: Neovim and Vim configuration.
 - `.xinitrc` and `.config/sxhkd/`: dwm session startup and desktop shortcuts.
 - `.config/kitty/`, `.config/lf/`, and `.config/fastfetch/`: application configuration.
+- `firefox/policies.json`: Firefox startup policy that always restores the previous session.
 - `.tmux.conf` and `.tmux/`: tmux configuration and vendored plugins.
 - `.local/bin/`: personal helper commands.
 - `.codex/AGENTS.md` and `.claude/`: coding-agent instructions and settings.

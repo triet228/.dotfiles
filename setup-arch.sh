@@ -114,6 +114,9 @@ fi
 yay -S --needed --noconfirm $aur_packages
 
 sudo install -Dm644 \
+    "$repo/firefox/policies.json" \
+    /usr/lib/firefox/distribution/policies.json
+sudo install -Dm644 \
     "$repo/systemd/system/systemd-networkd-wait-online.service.d/override.conf" \
     /etc/systemd/system/systemd-networkd-wait-online.service.d/override.conf
 sudo systemctl daemon-reload
