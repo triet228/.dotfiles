@@ -2,20 +2,22 @@
 
 This repository keeps shell, editor, terminal, file-manager, and agent configuration in Git so the same setup can be reused across machines. The files remain in the repository, while links expose them at the paths where each program expects to find them.
 
-The repository only manages configuration. Install the programs referenced by the configuration separately, such as Git, GNU Stow, PowerShell, Neovim, Vim, tmux, Kitty, lf, fzf, eza, zoxide, and direnv as needed on each machine.
+The repository includes an Arch Linux installer for the desktop and command-line dependencies used by the configuration. Windows linking remains available for older machines.
 
 ## Linux setup
 
-Clone the repository and use GNU Stow to create symbolic links in the home directory:
+On Arch Linux, clone the repository and run the setup script:
 
 ```sh
 cd ~/Projects
 git clone git@github.com:triet228/.dotfiles.git
 cd .dotfiles
-stow . --target "$HOME"
+./setup-arch.sh
 ```
 
-Stow does not overwrite existing files. Back up or reconcile any reported conflicts before running it again.
+The script installs required official and AUR packages, links the managed files, creates XDG user directories, and installs Neovim plugins. It is safe to rerun and refuses to overwrite conflicting files. Application state under `~/.codex`, `~/.claude`, and `~/.local/bin` remains outside the repository.
+
+Start the desktop from a TTY with `startx`, or select the dwm X11 session in the login manager. The X session starts sxhkd, dunst, picom, CopyQ, KeePassXC, Kitty, GitHub Desktop, and Firefox when available.
 
 ## Windows setup
 
@@ -43,16 +45,19 @@ git pull --rebase
 git push
 ```
 
-After pulling on another machine, rerun the appropriate linking command if new configuration files were added.
+After pulling on another machine, rerun the appropriate setup command if new configuration files or dependencies were added.
 
 ## Main contents
 
 - `.config/powershell/`: PowerShell profile, key bindings, navigation, prompt, and helper functions.
+- `.gitconfig`: Git configuration, including Delta output for `git diff`.
 - `.zshrc`: Zsh configuration for Linux.
 - `.config/nvim/` and `.vimrc`: Neovim and Vim configuration.
-- `.config/kitty/`, `.config/lf/`, `.config/fastfetch/`, and `.config/sxhkd/`: application configuration.
+- `.xinitrc` and `.config/sxhkd/`: dwm session startup and desktop shortcuts.
+- `.config/kitty/`, `.config/lf/`, and `.config/fastfetch/`: application configuration.
 - `.tmux.conf` and `.tmux/`: tmux configuration and vendored plugins.
 - `.local/bin/`: personal helper commands.
 - `.codex/AGENTS.md` and `.claude/`: coding-agent instructions and settings.
+- `setup-arch.sh`: repeatable Arch package installation and dotfile linking.
 
 The `clean` helper intentionally performs system package/cache cleanup and clears the contents of `Downloads` and `Pictures`. Review it before using it on a new machine.

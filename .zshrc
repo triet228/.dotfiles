@@ -3,8 +3,8 @@
 # ------------------------------------------------------------------------------
 
 # Set default editor
-export EDITOR=nvim
-export VISUAL=nvim
+export EDITOR=vim
+export VISUAL=vim
 
 # Add local binaries to the path
 export PATH="$HOME/.local/bin:$PATH"
@@ -91,8 +91,11 @@ RPROMPT='${vcs_info_msg_0_}'
 # ------------------------------------------------------------------------------
 
 # Load zsh-autosuggestions
+ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=8'
 if [[ -f /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh ]]; then
   source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
+elif [[ -f ~/.local/share/zsh-autosuggestions/zsh-autosuggestions.zsh ]]; then
+  source ~/.local/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 fi
 
 # Load zsh-syntax-highlighting
@@ -119,8 +122,7 @@ zle -N fzf_file_from_home
 bindkey '^H' fzf_file_from_home
 
 # -- Other Tools --
-eval "$(zoxide init zsh)"
-eval "$(direnv hook zsh)"
+command -v zoxide >/dev/null 2>&1 && eval "$(zoxide init zsh)"
 
 # Load Conda's shell functions without starting Conda's Python process on every
 # new terminal. Environments remain available through `conda activate <name>`.
@@ -147,7 +149,6 @@ zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
 # Keybindings
 bindkey '^F' complete-word      # Ctrl+F to complete word
 bindkey '^I' autosuggest-accept # Tab to accept suggestion
-setxkbmap -option caps:swapescape # Swap Caps Lock and Escape
 
 # ------------------------------------------------------------------------------
 # ALIASES
@@ -241,7 +242,7 @@ clean() {
   sudo rm -rf ~/Pictures/*
   bash -O extglob -c 'rm -rf ~/.cache/!(keepassxc|Tectonic|mozilla|pre-commit|hugo_cache|lf)'
   sudo rm -rf /tmp/*
-  git --git-dir=$HOME/.dotfiles/.git --work-tree=$HOME/.dotfiles pull
+  git -C "$HOME/Projects/.dotfiles" pull
   clear
   command -v fastfetch >/dev/null 2>&1 && fastfetch
 }
@@ -284,4 +285,4 @@ compress() {
 }
 
 # Print system info at the start of shell
-command -v fastfetch >/dev/null 2>&1 && fastfetch
+command -v neofetch >/dev/null 2>&1 && neofetch

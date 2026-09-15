@@ -1,5 +1,4 @@
-" Windows-local Vim config adapted from ~/Projects/.dotfiles/.vimrc.
-" Keep Linux-only clipboard and terminal-image hooks out of this file.
+" Vim configuration shared by the Arch desktop and remote terminals.
 
 source $VIMRUNTIME/defaults.vim
 
@@ -13,7 +12,9 @@ augroup END
 colorscheme torte
 set path+=**
 
-if has('clipboard')
+if has('unnamedplus')
+  set clipboard=unnamedplus
+elseif has('clipboard')
   set clipboard=unnamed
 endif
 
@@ -124,5 +125,5 @@ augroup cpp_settings
   autocmd FileType cpp,c inoremap " ""<Left>
   autocmd FileType cpp,c inoremap ' ''<Left>
   autocmd FileType cpp,c inoremap jk <Right>
-  autocmd FileType cpp,c nnoremap <buffer> <F5> :w <bar> !g++ % && ./a.exe <CR>
+  autocmd FileType cpp,c nnoremap <buffer> <F5> :w <bar> !g++ % -o %:r && ./%:r <CR>
 augroup END

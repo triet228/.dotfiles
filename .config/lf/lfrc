@@ -1,10 +1,11 @@
 set drawbox true
 set icons true
 set preview true
-set previewer ~/.config/lf/previewer.cmd
+set previewer ~/.config/lf/previewer
+set cleaner ~/.config/lf/cleaner
 
 set sortby ext
 set dirfirst true
 
 map . set hidden!
-map DD %Remove-Item -LiteralPath "$env:f" -Recurse -Force
+map DD %trash-put -- $fx

@@ -1,0 +1,12 @@
+[user]
+	name = Triet Ho
+	email = hominhtriet2004@gmail.com
+[url "git@github.com:"]
+	insteadOf = https://github.com/
+[pager]
+	diff = delta
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true

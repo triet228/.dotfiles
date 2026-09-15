@@ -12,6 +12,7 @@ $Links = @(
     @{ Source = ".codex\AGENTS.md"; Target = "$HOME\.codex\AGENTS.md" },
     @{ Source = ".codex\AGENTS.md"; Target = "$HOME\.claude\CLAUDE.md" },
     @{ Source = ".claude\settings.json"; Target = "$HOME\.claude\settings.json" },
+    @{ Source = ".gitconfig"; Target = "$HOME\.gitconfig" },
     @{ Source = ".vimrc"; Target = "$HOME\.vimrc" },
     @{ Source = ".zshrc"; Target = "$HOME\.zshrc" },
     @{ Source = ".tmux.conf"; Target = "$HOME\.tmux.conf" },

@@ -1,7 +1,7 @@
 
-# Take screenshot 
+# Save and copy a selected screenshot.
 shift + super + s
-    i=1; while [ -e "$(printf "$HOME/Pictures/screenshot_%04d.png" "$i")" ]; do i=$((i+1)); done; file="$(printf "$HOME/Pictures/screenshot_%04d.png" "$i")"; maim -s -u "$file" && xclip -selection clipboard -t image/png -i "$file"
+    mkdir -p "$HOME/Pictures"; i=1; while [ -e "$(printf "$HOME/Pictures/screenshot_%04d.png" "$i")" ]; do i=$((i+1)); done; file="$(printf "$HOME/Pictures/screenshot_%04d.png" "$i")"; maim -s -u "$file" && xclip -selection clipboard -t image/png -i "$file"
 
 # Lock
 super + l
@@ -9,27 +9,23 @@ super + l
 
 # Lock and Sleep
 shift + super + l
-    slock & systemctl suspend
+    slock & sleep 0.5; systemctl suspend
 
 # Full screenshot
 Print
-    i=1; while [ -e "$(printf "$HOME/Pictures/full_screen_%04d.png" "$i")" ]; do i=$((i+1)); done; file="$(printf "$HOME/Pictures/full_screen_%04d.png" "$i")"; maim -u "$file" && xclip -selection clipboard -t image/png -i "$file"
+    mkdir -p "$HOME/Pictures"; i=1; while [ -e "$(printf "$HOME/Pictures/full_screen_%04d.png" "$i")" ]; do i=$((i+1)); done; file="$(printf "$HOME/Pictures/full_screen_%04d.png" "$i")"; maim -u "$file" && xclip -selection clipboard -t image/png -i "$file"
     
 # Increase volume
 XF86AudioRaiseVolume
-    pamixer -i 5
+    wpctl set-volume -l 1.5 @DEFAULT_AUDIO_SINK@ 5%+
 
 # Decrease volume
 XF86AudioLowerVolume
-    pamixer -d 5
+    wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-
 
 # Toggle mute
 XF86AudioMute
-    pamixer -t
-
-# Open dmenu
-alt + p
-    dmenu_run
+    wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle
 
 # Increase brightness
 XF86MonBrightnessUp

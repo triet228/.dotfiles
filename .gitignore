@@ -1,4 +1,5 @@
 .local/bin/identify-cli
+.local/bin/delta
 .local/bin/nodeenv
 .local/bin/pre-commit
 .local/bin/ruff
@@ -8,3 +9,5 @@
 __pycache__/
 *.py[cod]
 .config/cagent/
+.codex/*
+!.codex/AGENTS.md
