@@ -285,4 +285,4 @@ compress() {
 }
 
 # Print system info at the start of shell
-command -v neofetch >/dev/null 2>&1 && neofetch
+command -v fastfetch >/dev/null 2>&1 && fastfetch
