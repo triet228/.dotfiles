@@ -20,6 +20,11 @@ run_once kitty
 run_once github-desktop
 run_once firefox
 
+if command -v xdotool >/dev/null 2>&1; then
+    (xdotool search --sync --class '^GitHub Desktop$' >/dev/null && \
+        sleep 1 && xdotool key --clearmodifiers alt+1) &
+fi
+
 if [ -x /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 ] && \
     ! pgrep -u "$USER" -f '/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1$' >/dev/null 2>&1; then
     /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
