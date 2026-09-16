@@ -48,4 +48,4 @@
 
 - Before edit any file in Overleaf, make sure to do git pull to sync between remote and local.
 
-- Do not claim authorship as Claude. Author is Triet Ho only.
+- Do not claim authorship as Claude or Codex. Author is Triet Ho only. Do not create branch with ur name like codex/ or claude/ either.
