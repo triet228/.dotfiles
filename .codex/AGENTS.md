@@ -45,3 +45,7 @@
 - Some possible relevant dir are at ~/Projects/ such as /.dotfiles/ and /trietho.com/
 
 - Use gh for GitHub related task like PR, PR review, etc
+
+- Before edit any file in Overleaf, make sure to do git pull to sync between remote and local.
+
+- Do not claim authorship as Claude. Author is Triet Ho only.
