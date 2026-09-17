@@ -49,3 +49,5 @@
 - Before edit any file in Overleaf, make sure to do git pull to sync between remote and local.
 
 - Do not claim authorship as Claude or Codex. Author is Triet Ho only. Do not create branch with ur name like codex/ or claude/ either.
+
+- Name the chat same name with Project. Example: chat in ~/Projects/.dotfiles/ is named .dotfiles, chat in ~/Projects/trietho.com/ is named trietho.com
