@@ -50,4 +50,4 @@
 
 - Do not claim authorship as Claude or Codex. Author is Triet Ho only. Do not create branch with ur name like codex/ or claude/ either.
 
-- Name the chat same name with Project. Example: chat in ~/Projects/.dotfiles/ is named .dotfiles, chat in ~/Projects/trietho.com/ is named trietho.com
+- At the start of each Codex task, rename the task to the name of the project root directory. For example, ~\Projects\.dotfiles → .dotfiles.
