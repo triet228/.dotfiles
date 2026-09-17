@@ -56,21 +56,6 @@ function Test-SameFile {
     return (Get-FileHash -LiteralPath $Left).Hash -eq (Get-FileHash -LiteralPath $Right).Hash
 }
 
-function Test-SameHardLink {
-    param($Left, $Right)
-
-    if (-not (Test-Path -LiteralPath $Left -PathType Leaf) -or -not (Test-Path -LiteralPath $Right -PathType Leaf)) {
-        return $false
-    }
-
-    $RightPath = [System.IO.Path]::GetFullPath($Right)
-    $RightRoot = [System.IO.Path]::GetPathRoot($RightPath)
-    $RightVolumePath = "\" + $RightPath.Substring($RightRoot.Length).TrimStart("\")
-    $HardLinks = @(& fsutil hardlink list $Left 2>$null)
-
-    return $HardLinks -contains $RightVolumePath
-}
-
 function Test-RoutesToSource {
     param($Target, $Source)
 
@@ -81,6 +66,18 @@ function Test-RoutesToSource {
     $TargetItem = Get-Item -LiteralPath $Target -Force
     $NestedTarget = Get-LinkTarget $TargetItem
     return $TargetItem.LinkType -and $NestedTarget -eq $Source
+}
+
+$Probe = Join-Path $env:TEMP "dotfiles-symlink-probe-$([guid]::NewGuid().ToString('N'))"
+try {
+    New-Item -ItemType SymbolicLink -Path $Probe -Target (Join-Path $Repo '.codex\AGENTS.md') -ErrorAction Stop | Out-Null
+} catch {
+    Write-Error "File symbolic links require Windows Developer Mode or an elevated PowerShell session. No links were changed."
+    exit 1
+} finally {
+    if (Get-Item -LiteralPath $Probe -Force -ErrorAction SilentlyContinue) {
+        Remove-Item -LiteralPath $Probe -Force
+    }
 }
 
 foreach ($Link in $Links) {
@@ -97,31 +94,29 @@ foreach ($Link in $Links) {
         New-Item -ItemType Directory -Path $Parent -Force | Out-Null
     }
 
-    if (Test-Path -LiteralPath $Target) {
-        $Item = Get-Item -LiteralPath $Target -Force
+    $Item = Get-Item -LiteralPath $Target -Force -ErrorAction SilentlyContinue
+    if ($Item) {
         $ExistingTarget = Get-LinkTarget $Item
 
-        if ($Item.LinkType -eq "HardLink" -and (Test-SameHardLink $Source $Target)) {
+        if ($Item.LinkType -and $Item.LinkType -ne "HardLink" -and $ExistingTarget -eq $Source) {
             $AlreadyLinked += $Target
             continue
         }
 
-        if ($Item.LinkType -eq "HardLink") {
-            $Conflicts += "hard-linked elsewhere, left alone: $Target"
-            continue
-        }
-
-        if ($Item.LinkType -and $ExistingTarget -eq $Source) {
-            $AlreadyLinked += $Target
-            continue
-        }
-
-        if ($Item.LinkType -and (Test-RoutesToSource $ExistingTarget $Source)) {
+        if ($Item.LinkType -and $Item.LinkType -ne "HardLink" -and (Test-RoutesToSource $ExistingTarget $Source)) {
             $AlreadyLinked += "$Target -> $ExistingTarget -> $Source"
             continue
         }
 
-        if ($Item.LinkType -and -not (Test-Path -LiteralPath $ExistingTarget)) {
+        if ($Item.LinkType -eq "HardLink") {
+            if (Test-SameFile $Source $Target) {
+                Remove-Item -LiteralPath $Target -Force
+            } else {
+                $Backup = "$Target.backup-$(Get-Date -Format 'yyyyMMdd-HHmmss-fffffff')"
+                Move-Item -LiteralPath $Target -Destination $Backup -ErrorAction Stop
+                Write-Host "Backed up old hard link: $Target -> $Backup"
+            }
+        } elseif ($Item.LinkType -and -not (Test-Path -LiteralPath $ExistingTarget)) {
             Remove-Item -LiteralPath $Target -Force
         } elseif ($Item.LinkType) {
             $Conflicts += "linked elsewhere, left alone: $Target -> $ExistingTarget"
@@ -137,7 +132,7 @@ foreach ($Link in $Links) {
     if (Test-Path -LiteralPath $Source -PathType Container) {
         New-Item -ItemType Junction -Path $Target -Target $Source -ErrorAction Stop | Out-Null
     } else {
-        New-Item -ItemType HardLink -Path $Target -Target $Source -ErrorAction Stop | Out-Null
+        New-Item -ItemType SymbolicLink -Path $Target -Target $Source -ErrorAction Stop | Out-Null
     }
 
     $Created += "$Target -> $Source"

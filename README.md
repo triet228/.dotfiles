@@ -29,9 +29,9 @@ cd "$HOME\Projects\.dotfiles"
 .\setup-windows-symlinks.ps1
 ```
 
-The installer derives the repository location from its own path. It creates directory junctions for configuration directories and hard links for individual files. It also links the Neovim configuration into both `~/.config/nvim` and `%LOCALAPPDATA%\nvim`, and installs the PowerShell profile in the locations used by PowerShell and Windows PowerShell.
+The installer derives the repository location from its own path. It creates directory junctions for configuration directories and symbolic links for individual files, so Git updates cannot leave file links pointing at replaced files. Creating file symbolic links requires Windows Developer Mode or an elevated PowerShell session. It also links the Neovim configuration into both `~/.config/nvim` and `%LOCALAPPDATA%\nvim`, and installs the PowerShell profile in the locations used by PowerShell and Windows PowerShell.
 
-The installer can be run repeatedly. Existing correct links are left alone, identical regular files are replaced with links, dangling links are repaired, and conflicting files are reported without being overwritten. Resolve reported conflicts deliberately and rerun the script.
+The installer can be run repeatedly. Existing correct links are left alone, identical regular files are replaced with links, and dangling links are repaired. Existing hard links are migrated to symbolic links; if their content differs from the repository, the installer preserves the old content in a timestamped backup beside the link. Other conflicting files are reported without being overwritten. Resolve reported conflicts deliberately and rerun the script.
 
 ## Updating
 
