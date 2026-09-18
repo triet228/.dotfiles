@@ -5,5 +5,10 @@
   },
   "model": "sonnet",
   "effortLevel": "medium",
-  "skipWorkflowUsageWarning": true
+  "skipWorkflowUsageWarning": true,
+  "attribution": {
+    "commit": "",
+    "pr": "",
+    "sessionUrl": false
+  }
 }
