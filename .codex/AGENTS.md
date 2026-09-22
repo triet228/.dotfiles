@@ -51,3 +51,5 @@
 - Do not claim authorship as Claude or Codex. Author is Triet Ho only. Do not create branch with ur name like codex/ or claude/ either.
 
 - At the start of each Codex task, rename the task to the name of the project root directory. For example, ~\Projects\.dotfiles → .dotfiles.
+
+- When I say create a branch, I mean both local and remote github
