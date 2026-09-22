@@ -42,7 +42,7 @@
 
 - When ssh, use PuTTY if applicable.
 
-- Some possible relevant dir are at ~/Projects/ such as /.dotfiles/ and /trietho.com/
+- Some possible relevant dir are at ~/Downloads/, ~/Pictures/, and ~/Projects/
 
 - Use gh for GitHub related task like PR, PR review, etc
 
