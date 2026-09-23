@@ -13,6 +13,7 @@ command -v dbus-update-activation-environment >/dev/null 2>&1 && \
 
 run_once sxhkd
 run_once dunst
+run_once slstatus
 run_once picom --daemon
 run_once copyq
 run_once keepassxc --allow-screencapture \
