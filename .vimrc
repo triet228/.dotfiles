@@ -34,6 +34,10 @@ set expandtab
 set belloff=all
 set mouse=
 
+" Use an I-beam in Insert mode and restore a block cursor on exit.
+let &t_SI = "\<Esc>[6 q"
+let &t_EI = "\<Esc>[2 q"
+
 " Prefer Unix line endings and convert files to LF on save.
 set fileformats=unix,dos
 set fileformat=unix
