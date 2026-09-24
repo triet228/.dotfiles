@@ -24,8 +24,12 @@ run_once github-desktop
 run_once firefox
 
 if command -v xdotool >/dev/null 2>&1; then
-    (xdotool search --sync --class '^GitHub Desktop$' >/dev/null && \
-        sleep 1 && xdotool key --clearmodifiers alt+1) &
+    (xdotool search --sync --onlyvisible --limit 1 \
+        --class '^KeePassXC$' >/dev/null && \
+        xdotool key --clearmodifiers alt+9 && \
+        xdotool search --sync --onlyvisible --limit 1 \
+        --name '^Passwords - KeePassXC$' >/dev/null && \
+        xdotool key --clearmodifiers alt+1) &
 fi
 
 if [ -x /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 ] && \
