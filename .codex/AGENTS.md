@@ -42,7 +42,7 @@
 
 - When ssh, use PuTTY if applicable.
 
-- Some possible relevant dir are at ~/Data, ~/Downloads/, ~/Pictures/, and ~/Projects/
+- Some possible relevant dir are at ~/.dotfiles, ~/.ssh, ~/Data, ~/Downloads/, ~/Pictures/, and ~/Projects/
 
 - Use gh for GitHub related task like PR, PR review, etc
 
