@@ -9,7 +9,7 @@ $LocalBin = Join-Path $HOME ".local\bin"
 $HugoBin = Get-ChildItem "$env:LOCALAPPDATA\Microsoft\WinGet\Packages" -Recurse -Filter hugo.exe -ErrorAction SilentlyContinue |
     Select-Object -First 1 -ExpandProperty DirectoryName
 foreach ($PathToAdd in @($LocalBin, "$HOME\miniconda3\condabin", "$HOME\miniconda3\Scripts", "$HOME\miniconda3", "C:\Program Files\Neovim\bin", "C:\Program Files\Go\bin", $HugoBin)) {
-    if ((Test-Path $PathToAdd) -and (($env:Path -split ";") -notcontains $PathToAdd)) {
+    if ($PathToAdd -and (Test-Path $PathToAdd) -and (($env:Path -split ";") -notcontains $PathToAdd)) {
         $env:Path = "$PathToAdd;$env:Path"
     }
 }
