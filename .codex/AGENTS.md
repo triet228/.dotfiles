@@ -32,7 +32,7 @@
 
 - Do not have file path comment on first line for files that are not Python.
 
-- "legacy" means: get rid of legacy stuff if u still have them.
+- "legacy" means: get rid of legacy stuff if u still have them. Then commit.
 
 - When I try to delete a feature, also get rid of any legacy stuff if u still have them rather than preserving half-migrated behavior.
 
