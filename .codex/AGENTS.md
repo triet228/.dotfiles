@@ -52,4 +52,6 @@
 
 - At the start of each Codex task, rename the task to the name of the project root directory. For example, ~\Projects\.dotfiles → .dotfiles.
 
-- When I say create a branch, I mean both local and remote github
+- When I say create a branch, I mean both local and remote GitHub
+
+- If u compile LaTeX, do not use build in LaTeX compiler, use pdflatex in MiKTeX
