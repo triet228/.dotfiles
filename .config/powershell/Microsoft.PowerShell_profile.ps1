@@ -3,7 +3,7 @@ $env:VISUAL = "nvim"
 $env:XDG_CONFIG_HOME = Join-Path $HOME ".config"
 $env:EZA_COLORS = "di=1;36:fi=0:ex=1;32:*.kdbx=1;37:da=38;5;250"
 $env:PYTHONWARNINGS = "ignore:OpenSSL 3's legacy provider failed to load"
-$env:OLLAMA_HOST = "http://100.65.249.113:11434"
+$env:OLLAMA_HOST = "http://127.0.0.1:11434"
 
 $LocalBin = Join-Path $HOME ".local\bin"
 $HugoBin = Get-ChildItem "$env:LOCALAPPDATA\Microsoft\WinGet\Packages" -Recurse -Filter hugo.exe -ErrorAction SilentlyContinue |
