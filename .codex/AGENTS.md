@@ -57,3 +57,5 @@
 - If u compile LaTeX, do not use build in LaTeX compiler, use pdflatex in MiKTeX
 
 - When I say git pull, I mean pull including submodules update, then commit the submodules update.
+
+- Never edit ./external/
