@@ -1,14 +1,17 @@
 {
-  "permissions": {
-    "defaultMode": "bypassPermissions",
-    "deny": ["AskUserQuestion"]
-  },
-  "model": "sonnet",
-  "effortLevel": "medium",
-  "skipWorkflowUsageWarning": true,
   "attribution": {
     "commit": "",
     "pr": "",
     "sessionUrl": false
-  }
+  },
+  "permissions": {
+    "deny": [
+      "AskUserQuestion"
+    ],
+    "defaultMode": "bypassPermissions"
+  },
+  "model": "sonnet",
+  "effortLevel": "medium",
+  "skipWorkflowUsageWarning": true,
+  "skipDangerousModePermissionPrompt": true
 }

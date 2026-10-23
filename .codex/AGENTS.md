@@ -59,3 +59,5 @@
 - When I say git pull, I mean pull including submodules update, then commit the submodules update.
 
 - Never edit ./external/
+
+- Doo not use schedule task unless I explicitly tell you to do so
