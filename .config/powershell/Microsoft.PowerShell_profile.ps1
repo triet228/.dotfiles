@@ -241,6 +241,7 @@ function global:prompt {
 }
 
 if (Get-Command zoxide -ErrorAction SilentlyContinue) {
+    Remove-Variable __zoxide_hooked -Scope Global -ErrorAction SilentlyContinue
     Invoke-Expression (& zoxide init powershell --cmd z | Out-String)
 }
 

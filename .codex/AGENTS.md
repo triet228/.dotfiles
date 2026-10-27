@@ -48,7 +48,7 @@
 
 - Before edit any file in Overleaf, make sure to do git pull to sync between remote and local.
 
-- Do not claim authorship as Claude or Codex. Author is Triet Ho only. Do not create branch with ur name like codex/ or claude/ either.
+- Do not claim authorship as Claude or Codex. Author is always Triet Ho only. Never co-author as Claude. Do not create branch with ur name like codex/ or claude/ either.
 
 - At the start of each Codex task, rename the task to the name of the project root directory. For example, ~\Projects\.dotfiles → .dotfiles.
 
