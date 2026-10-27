@@ -50,9 +50,9 @@
 
 - Do not claim authorship as Claude or Codex. Author is always Triet Ho only. Never co-author as Claude. Do not create branch with ur name like codex/ or claude/ either.
 
-- At the start of each Codex task, rename the task to the name of the project root directory. For example, ~\Projects\.dotfiles → .dotfiles.
+- At the start of each Codex task, rename the task to the name of the project root directory. For example, ~\Projects\.dotfiles → .dotfiles. If there's no project, just use the normal name.
 
-- When I say create a branch, I mean both local and remote GitHub
+- When I say create, delete, merge, etc a branch, I mean both local and remote GitHub
 
 - If u compile LaTeX, do not use build in LaTeX compiler, use pdflatex in MiKTeX
 
@@ -61,3 +61,5 @@
 - Never edit ./external/
 
 - Doo not use schedule task unless I explicitly tell you to do so
+
+- For Overleaf Log repo, always commit after the edit.
