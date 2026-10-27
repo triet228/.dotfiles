@@ -44,6 +44,8 @@
 
 - Some possible relevant dir are at ~/.dotfiles, ~/.ssh, ~/Data, ~/Downloads/, ~/Pictures/, and ~/Projects/
 
+- project likely mean ~/Projects/, data likely mean ~/Data, download likely mean ~/Downloads/, etc
+
 - Use gh for GitHub related task like PR, PR review, etc
 
 - Before edit any file in Overleaf, make sure to do git pull to sync between remote and local.
@@ -63,3 +65,5 @@
 - Doo not use schedule task unless I explicitly tell you to do so
 
 - For Overleaf Log repo, always commit after the edit.
+
+- agent mean read, understand, remember, save to memory, and commit AGENTS.md
