@@ -19,6 +19,10 @@ The script installs required official and AUR packages, applies the Firefox poli
 
 Start the desktop from a TTY with `startx`, or select the dwm X11 session in the login manager. The X session starts sxhkd, dunst, picom, CopyQ, KeePassXC, Kitty, GitHub Desktop, and Firefox when available.
 
+## Ubuntu setup
+
+On Ubuntu, run `./setup-ubuntu.sh` instead. It installs the command-line tools with apt, adds upstream builds of Neovim and fastfetch, links the managed files (including `.config/fish/config.fish`), and installs Neovim plugins. Conflicting files are moved into `~/.dotfiles-backup/` instead of being overwritten. The dwm desktop files are skipped.
+
 ## Windows setup
 
 Clone the repository anywhere, then run the PowerShell installer from the repository root:
