@@ -178,7 +178,7 @@ alias update='yay -Syu --noconfirm'
 alias sleepp='slock & systemctl suspend'
 alias math='qalc'
 alias icat='kitty +kitten icat'
-alias convert='magick'
+command -v magick >/dev/null 2>&1 && alias convert='magick'
 alias matlab='docker run -it --rm -p 8888:8888 -v ~/Projects/FAST:/home/matlab/FAST -v ~/Data/CLASSES/AEROSP_568/:/home/matlab/AEROSP_568-v matlab_config:/home/matlab/.matlab --shm-size=2g --name matlab_container matlab -browser'
 
 # File operations

@@ -30,6 +30,7 @@ pkg-config
 nodejs
 npm
 poppler-utils
+qalc
 ripgrep
 tmux
 trash-cli

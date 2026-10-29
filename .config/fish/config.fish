@@ -17,7 +17,7 @@ if status is-interactive
     alias ll='eza -la --sort=ext --icons --group-directories-first --time-style=long-iso --git'
     alias ls='eza -l --sort=ext --icons --group-directories-first --time-style=long-iso --git --no-permissions --no-user'
     for level in (seq 2 9)
-        alias ls(string repeat -n $level s) "eza --icons --tree --level=$level --group-directories-first"
+        alias ls(string repeat -n (math $level - 1) s) "eza --icons --tree --level=$level --group-directories-first"
     end
     alias vim nvim
     alias d 'cd ~/Downloads'
@@ -26,8 +26,7 @@ if status is-interactive
     alias h 'z ~ && ll'
     alias cpd 'cp -t ~/Downloads'
     alias icat 'kitty +kitten icat'
-    alias convert magick
-    alias math qalc
+    command -q magick; and alias convert magick
     alias update 'sudo apt update && sudo apt upgrade -y'
 
     function cd
