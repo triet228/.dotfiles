@@ -20,6 +20,9 @@ endif
 
 set undofile
 set undodir=$HOME/.vim/undodir
+if !isdirectory(expand(&undodir))
+  call mkdir(expand(&undodir), 'p')
+endif
 set undolevels=10000
 set undoreload=10000
 

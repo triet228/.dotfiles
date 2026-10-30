@@ -56,16 +56,28 @@ if (Test-Command pip) {
     pip cache purge
 }
 
-foreach ($cachePath in @(
+# This computer keeps executable runtimes and downloaded models in ~/.cache.
+# Clean only disposable caches; deleting the whole directory would remove those installations.
+$CachePaths = @(
     (Join-Path $env:LOCALAPPDATA "Temp"),
     (Join-Path $env:LOCALAPPDATA "pip\Cache"),
     (Join-Path $env:LOCALAPPDATA "npm-cache"),
     (Join-Path $env:LOCALAPPDATA "Microsoft\Windows\INetCache"),
-    (Join-Path $HOME ".cache")
-)) {
-    if (Test-Path -LiteralPath $cachePath) {
-        Get-ChildItem -LiteralPath $cachePath -Force -ErrorAction SilentlyContinue |
-            Remove-Item -Recurse -Force -ErrorAction SilentlyContinue
+    (Join-Path $HOME ".cache\lf"),
+    (Join-Path $HOME ".cache\starship"),
+    (Join-Path $HOME ".cache\yt-dlp")
+)
+foreach ($CachePath in $CachePaths) {
+    $CacheItem = Get-Item -LiteralPath $CachePath -Force -ErrorAction SilentlyContinue
+    if (-not $CacheItem -or -not $CacheItem.PSIsContainer -or
+        ($CacheItem.Attributes -band [IO.FileAttributes]::ReparsePoint)) { continue }
+
+    $CacheRoot = (Resolve-Path -LiteralPath $CachePath).Path.TrimEnd('\') + '\'
+    foreach ($Entry in @(Get-ChildItem -LiteralPath $CacheRoot -Force -ErrorAction SilentlyContinue)) {
+        $EntryPath = [IO.Path]::GetFullPath($Entry.FullName)
+        if (-not $EntryPath.StartsWith($CacheRoot, [StringComparison]::OrdinalIgnoreCase) -or
+            ($Entry.Attributes -band [IO.FileAttributes]::ReparsePoint)) { continue }
+        Remove-Item -LiteralPath $EntryPath -Recurse -Force -ErrorAction SilentlyContinue
     }
 }
 

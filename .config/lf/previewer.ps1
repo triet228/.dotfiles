@@ -1,4 +1,4 @@
-param([string]$Path)
+param($Path)
 
 if (-not $Path -or -not (Test-Path -LiteralPath $Path)) {
     exit 0

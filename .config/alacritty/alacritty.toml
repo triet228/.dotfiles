@@ -1,0 +1,13 @@
+[window]
+startup_mode = "Maximized"
+
+[font]
+size = 16.0
+
+[font.normal]
+family = "JetBrainsMono Nerd Font Mono"
+style = "Regular"
+
+[terminal.shell]
+program = "pwsh.exe"
+args = ["-NoLogo"]

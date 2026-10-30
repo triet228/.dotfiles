@@ -1,0 +1,32 @@
+set drawbox true
+set icons true
+set preview true
+set sortby ext
+set dirfirst true
+
+set shell powershell.exe
+set shellopts -NoLogo:-NoProfile:-NonInteractive
+set shellflag -Command
+
+set previewer ~/.config/lf/previewer.cmd
+
+# lf's built-in Windows commands use cmd.exe syntax, so replace them for PowerShell.
+cmd open &{{ Invoke-Item -LiteralPath $env:f }}
+cmd edit ${{ & $env:EDITOR $env:f }}
+cmd view !{{ bat --paging always -- $env:f }}
+cmd shell ${{ pwsh.exe -NoLogo }}
+cmd doc !{{ & $env:lf -doc | Out-Host -Paging }}
+cmd maps !{{ & $env:lf -remote "query $env:id maps" | Out-Host -Paging }}
+cmd cmaps !{{ & $env:lf -remote "query $env:id cmaps" | Out-Host -Paging }}
+cmd cmds !{{ & $env:lf -remote "query $env:id cmds" | Out-Host -Paging }}
+map e edit
+map i view
+map w shell
+map <f-1> doc
+
+map . set hidden!
+# lf exports selections separated by newlines; do not interpolate filenames into shell code.
+map DD %{{
+    $selected = @($env:fx -split "\r?\n" | Where-Object { $_ })
+    & "$env:USERPROFILE\.local\bin\trash-put.ps1" @selected
+}}

@@ -1,0 +1,8 @@
+[core]
+	editor = nvim
+	pager = delta
+	longPaths = true
+[credential]
+	# Reset the shared Linux helper before selecting Git for Windows' credential manager.
+	helper =
+	helper = manager
