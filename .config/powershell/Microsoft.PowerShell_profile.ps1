@@ -135,7 +135,7 @@ if ($InteractiveTerminal -and (Get-Module PSReadLine) -and (Get-Command fzf -Err
     Set-PSReadLineKeyHandler -Key Alt+c -ScriptBlock { Invoke-FzfCd }
 }
 
-$CondaRoots = @($env:_CONDA_ROOT, "$HOME\miniconda3", "$HOME\anaconda3", "$env:LOCALAPPDATA\miniconda3", "$env:ProgramData\miniconda3", "$env:ProgramData\Anaconda3")
+$CondaRoots = @($env:_CONDA_ROOT, "$HOME\miniconda3", "$HOME\anaconda3", "$env:LOCALAPPDATA\miniforge3", "$env:LOCALAPPDATA\miniconda3", "$env:ProgramData\miniconda3", "$env:ProgramData\Anaconda3")
 foreach ($CondaRoot in $CondaRoots) {
     if (-not $CondaRoot) { continue }
     $CondaExe = Join-Path $CondaRoot "Scripts\conda.exe"
@@ -246,7 +246,7 @@ function global:pimg {
 }
 
 function global:tools {
-    foreach ($name in @("git", "gh", "conda", "nvim", "lf.exe", "eza", "fzf", "zoxide", "rg", "starship", "fastfetch", "bat", "fd", "magick", "gswin64c")) {
+    foreach ($name in @("git", "gh", "conda", "nvim", "lf.exe", "eza", "fzf", "zoxide", "rg", "starship", "fastfetch", "bat", "fd", "magick", "gswin64c", "pdfcpu")) {
         $command = Get-Command $name -ErrorAction SilentlyContinue | Select-Object -First 1
         $location = if ($command) { if ($command.Source) { $command.Source } else { $command.CommandType } } else { "MISSING" }
         "$name -> $location"
@@ -271,8 +271,12 @@ function global:compress {
             $ghostscriptOptions = @('-sDEVICE=pdfwrite', '-dCompatibilityLevel=1.4', '-dPDFSETTINGS=/ebook', '-dNOPAUSE', '-dQUIET', '-dBATCH', "-sOutputFile=$out", $source)
             & gswin64c @ghostscriptOptions
             if ($LASTEXITCODE -ne 0) { Write-Error "Ghostscript failed to compress '$source'." }
+        } elseif (Get-Command pdfcpu -ErrorAction SilentlyContinue) {
+            # pdfcpu is portable and provides a non-admin fallback on managed Windows computers.
+            & pdfcpu optimize $source $out
+            if ($LASTEXITCODE -ne 0) { Write-Error "pdfcpu failed to optimize '$source'." }
         } else {
-            Write-Warning "Ghostscript is not installed, so '$file' was not compressed."
+            Write-Warning "Neither Ghostscript nor pdfcpu is installed, so '$file' was not compressed."
         }
     }
 }
