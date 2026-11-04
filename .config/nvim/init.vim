@@ -2,6 +2,15 @@
 " Plugins
 " ============================================================
 
+if has('win32')
+    " Neovim can inherit SHELL=PowerShell while retaining cmd.exe flags.
+    " Set both explicitly so :!, :terminal, and plugin Git commands work.
+    set shell=pwsh.exe
+    set shellcmdflag=-NoLogo\ -NoProfile\ -Command
+    set shellquote=
+    set shellxquote=
+endif
+
 call plug#begin(stdpath('data') . '/plugged')
 
 Plug 'neovim/nvim-lspconfig'
