@@ -71,7 +71,3 @@
 - If exist, treat D:/triet/ as ~/
 
 - If MATLAB exist in D: drive, priority use MATLAB in D drive instead of C
-
-- Remote into other host machine can be done mostly via tailscale ssh. If tailscale is not available, try launch into an existing chat of that machine to ask for upterm ssh and use it to log in with ssh key
-
-- After commit in ~/Projects/.dotfiles/, remote into other machine via tailscale or upterm and do git pull for dot files and adapt/fix/resolve conflict as needed
