@@ -74,4 +74,4 @@
 
 - Remote into other host machine can be done mostly via tailscale ssh. If tailscale is not available, try launch into an existing chat of that machine to ask for upterm ssh and use it to log in with ssh key
 
-- After commit in ~/Projects/.dotfiles/, ssh into other machine via tailscale and do git pull for dot files and adapt/fix/resolve conflcit as needed
+- After commit in ~/Projects/.dotfiles/, remote into other machine via tailscale or upterm and do git pull for dot files and adapt/fix/resolve conflict as needed
