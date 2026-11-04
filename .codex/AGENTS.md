@@ -67,3 +67,5 @@
 - For Overleaf Log repo, always commit after the edit.
 
 - agent mean read, understand, remember, save to memory, and commit AGENTS.md
+
+- If exist, treat D:/triet/ as ~/
