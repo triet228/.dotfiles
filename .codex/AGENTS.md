@@ -69,3 +69,5 @@
 - agent mean read, understand, remember, save to memory, and commit AGENTS.md
 
 - If exist, treat D:/triet/ as ~/
+
+- If MATLAB exist in D: drive, priority use MATLAB in D drive instead of C
