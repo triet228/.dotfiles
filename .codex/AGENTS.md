@@ -71,3 +71,5 @@
 - If exist, treat D:/triet/ as ~/
 
 - If MATLAB exist in D: drive, priority use MATLAB in D drive instead of C
+
+- To remote control into other machine, launch into an existing chat on that remote host. Some known host are: Triet-PC, Triet-ThinkPad, eGPU, TrietHome. Alternatively, u can also do tailscale ssh into them.
