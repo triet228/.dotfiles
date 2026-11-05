@@ -97,6 +97,7 @@ if ($LASTEXITCODE -ne 0) {
 $WindowsTerminalSettingsPath = Join-Path $env:LOCALAPPDATA "Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json"
 if (Test-Path -LiteralPath $WindowsTerminalSettingsPath -PathType Leaf) {
     $WindowsTerminalSettings = Get-Content -LiteralPath $WindowsTerminalSettingsPath -Raw | ConvertFrom-Json
+    $WindowsTerminalSettingsChanged = $false
     $WindowsPowerShellTerminalProfile = $WindowsTerminalSettings.profiles.list |
         Where-Object guid -EQ "{61c54bbd-c2c6-5271-96e7-009a87ff44bf}" |
         Select-Object -First 1
@@ -106,9 +107,49 @@ if (Test-Path -LiteralPath $WindowsTerminalSettingsPath -PathType Leaf) {
             $AlreadyLinked += "Windows Terminal Windows PowerShell execution policy"
         } else {
             $WindowsPowerShellTerminalProfile.commandline = $WindowsPowerShellTerminalCommand
-            [IO.File]::WriteAllText($WindowsTerminalSettingsPath, ($WindowsTerminalSettings | ConvertTo-Json -Depth 100))
+            $WindowsTerminalSettingsChanged = $true
             $Created += "Windows Terminal Windows PowerShell execution policy"
         }
+    }
+
+    # PowerShell 7 includes a current PSReadLine release, which provides the inline history
+    # predictions configured by the shared profile; Windows PowerShell 5.1 ships an older release.
+    $PowerShellTerminalProfile = $WindowsTerminalSettings.profiles.list |
+        Where-Object source -EQ "Windows.Terminal.PowershellCore" |
+        Select-Object -First 1
+    if (-not $PowerShellTerminalProfile) {
+        $Conflicts += "PowerShell 7 Windows Terminal profile is missing; install winget package Microsoft.PowerShell"
+    } elseif ($WindowsTerminalSettings.defaultProfile -eq $PowerShellTerminalProfile.guid) {
+        $AlreadyLinked += "Windows Terminal default profile (PowerShell 7)"
+    } else {
+        $WindowsTerminalSettings.defaultProfile = $PowerShellTerminalProfile.guid
+        $WindowsTerminalSettingsChanged = $true
+        $Created += "Windows Terminal default profile (PowerShell 7)"
+    }
+
+    # lf and other terminal tools use Nerd Font glyphs for file and status icons.
+    $WindowsTerminalFontFace = "JetBrainsMono Nerd Font Mono"
+    if (-not $WindowsTerminalSettings.profiles.PSObject.Properties["defaults"]) {
+        $WindowsTerminalSettings.profiles | Add-Member -NotePropertyName defaults -NotePropertyValue ([PSCustomObject]@{})
+    }
+    if (-not $WindowsTerminalSettings.profiles.defaults.PSObject.Properties["font"]) {
+        $WindowsTerminalSettings.profiles.defaults | Add-Member -NotePropertyName font -NotePropertyValue ([PSCustomObject]@{})
+    }
+    $WindowsTerminalFont = $WindowsTerminalSettings.profiles.defaults.font
+    if ($WindowsTerminalFont.face -eq $WindowsTerminalFontFace) {
+        $AlreadyLinked += "Windows Terminal Nerd Font"
+    } else {
+        if ($WindowsTerminalFont.PSObject.Properties["face"]) {
+            $WindowsTerminalFont.face = $WindowsTerminalFontFace
+        } else {
+            $WindowsTerminalFont | Add-Member -NotePropertyName face -NotePropertyValue $WindowsTerminalFontFace
+        }
+        $WindowsTerminalSettingsChanged = $true
+        $Created += "Windows Terminal Nerd Font"
+    }
+
+    if ($WindowsTerminalSettingsChanged) {
+        [IO.File]::WriteAllText($WindowsTerminalSettingsPath, ($WindowsTerminalSettings | ConvertTo-Json -Depth 100))
     }
 }
 
@@ -338,6 +379,38 @@ if ((Test-Path -LiteralPath $OldPlugins -PathType Container) -and -not (Test-Pat
     New-Item -ItemType Directory -Path (Split-Path -Parent $Plugins) -Force | Out-Null
     New-Item -ItemType Junction -Path $Plugins -Target $OldPlugins | Out-Null
     $Created += "$Plugins -> $OldPlugins"
+}
+
+# The Neovim configuration declares plugins through vim-plug, so install the manager before
+# starting Neovim and then materialize every plugin declared in the linked init.vim.
+$NeovimCommand = Get-Command nvim.exe, nvim -ErrorAction SilentlyContinue | Select-Object -First 1
+if (-not $NeovimCommand) {
+    $Conflicts += "Neovim is not installed or not on PATH; install winget package Neovim.Neovim"
+} else {
+    $PlugVim = Join-Path $env:LOCALAPPDATA "nvim-data\site\autoload\plug.vim"
+    if (-not (Test-Path -LiteralPath $PlugVim -PathType Leaf)) {
+        New-Item -ItemType Directory -Path (Split-Path -Parent $PlugVim) -Force | Out-Null
+        try {
+            Invoke-WebRequest -UseBasicParsing `
+                -Uri "https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim" `
+                -OutFile $PlugVim
+            $Created += $PlugVim
+        } catch {
+            Remove-Item -LiteralPath $PlugVim -Force -ErrorAction SilentlyContinue
+            $Conflicts += "could not install vim-plug: $($_.Exception.Message)"
+        }
+    } else {
+        $AlreadyLinked += $PlugVim
+    }
+
+    if (Test-Path -LiteralPath $PlugVim -PathType Leaf) {
+        & $NeovimCommand.Source --headless "+PlugInstall --sync" +qa
+        if ($LASTEXITCODE -ne 0) {
+            $Conflicts += "Neovim plugin installation failed with exit code $LASTEXITCODE"
+        } else {
+            $AlreadyLinked += "Neovim plugins installed"
+        }
+    }
 }
 
 # Keep the full Windows 10 context menu instead of requiring "Show more options" on every right-click.
