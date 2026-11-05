@@ -70,6 +70,48 @@ $Created = @()
 $AlreadyLinked = @()
 $Conflicts = @()
 
+# Windows PowerShell defaults to Restricted when no policy is configured, which prevents its
+# profile loader from running. Use a process-only bypass to bootstrap the persistent user policy.
+$WindowsPowerShellPath = Join-Path $env:SystemRoot "System32\WindowsPowerShell\v1.0\powershell.exe"
+$WindowsPowerShellPolicy = & $WindowsPowerShellPath -NoLogo -NoProfile -ExecutionPolicy Bypass -Command "Get-ExecutionPolicy -Scope CurrentUser"
+if ($LASTEXITCODE -ne 0) {
+    $Conflicts += "could not read the Windows PowerShell CurrentUser execution policy"
+} elseif ($WindowsPowerShellPolicy -eq "RemoteSigned") {
+    $AlreadyLinked += "Windows PowerShell CurrentUser execution policy (RemoteSigned)"
+} else {
+    & $WindowsPowerShellPath -NoLogo -NoProfile -ExecutionPolicy Bypass -Command "Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned -Force"
+    if ($LASTEXITCODE -ne 0) {
+        $Conflicts += "could not set the Windows PowerShell CurrentUser execution policy to RemoteSigned"
+    } else {
+        $EffectiveWindowsPowerShellPolicy = & $WindowsPowerShellPath -NoLogo -NoProfile -ExecutionPolicy Bypass -Command "Get-ExecutionPolicy"
+        if ($EffectiveWindowsPowerShellPolicy -ne "RemoteSigned") {
+            $Conflicts += "Windows PowerShell policy is overridden by $EffectiveWindowsPowerShellPolicy"
+        } else {
+            $Created += "Windows PowerShell CurrentUser execution policy (RemoteSigned)"
+        }
+    }
+}
+
+# Make Windows Terminal explicit as well: a stale process-level policy can otherwise override
+# the correct CurrentUser registry value for tabs launched from an existing Terminal process.
+$WindowsTerminalSettingsPath = Join-Path $env:LOCALAPPDATA "Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json"
+if (Test-Path -LiteralPath $WindowsTerminalSettingsPath -PathType Leaf) {
+    $WindowsTerminalSettings = Get-Content -LiteralPath $WindowsTerminalSettingsPath -Raw | ConvertFrom-Json
+    $WindowsPowerShellTerminalProfile = $WindowsTerminalSettings.profiles.list |
+        Where-Object guid -EQ "{61c54bbd-c2c6-5271-96e7-009a87ff44bf}" |
+        Select-Object -First 1
+    $WindowsPowerShellTerminalCommand = "%SystemRoot%\System32\WindowsPowerShell\v1.0\powershell.exe -ExecutionPolicy RemoteSigned"
+    if ($WindowsPowerShellTerminalProfile) {
+        if ($WindowsPowerShellTerminalProfile.commandline -eq $WindowsPowerShellTerminalCommand) {
+            $AlreadyLinked += "Windows Terminal Windows PowerShell execution policy"
+        } else {
+            $WindowsPowerShellTerminalProfile.commandline = $WindowsPowerShellTerminalCommand
+            [IO.File]::WriteAllText($WindowsTerminalSettingsPath, ($WindowsTerminalSettings | ConvertTo-Json -Depth 100))
+            $Created += "Windows Terminal Windows PowerShell execution policy"
+        }
+    }
+}
+
 function Get-LinkTarget {
     param($Item)
 
@@ -296,6 +338,72 @@ if ((Test-Path -LiteralPath $OldPlugins -PathType Container) -and -not (Test-Pat
     New-Item -ItemType Directory -Path (Split-Path -Parent $Plugins) -Force | Out-Null
     New-Item -ItemType Junction -Path $Plugins -Target $OldPlugins | Out-Null
     $Created += "$Plugins -> $OldPlugins"
+}
+
+# Keep the full Windows 10 context menu instead of requiring "Show more options" on every right-click.
+$ClassicContextMenuKey = "HKCU:\Software\Classes\CLSID\{86ca1aa0-34aa-4e8b-a509-50c905bae2a2}\InprocServer32"
+$ClassicContextMenuConfigured = $false
+if (Test-Path -LiteralPath $ClassicContextMenuKey) {
+    $ClassicContextMenuItem = Get-Item -LiteralPath $ClassicContextMenuKey
+    $ClassicContextMenuConfigured = $ClassicContextMenuItem.GetValueNames() -contains "" -and
+        $ClassicContextMenuItem.GetValue("") -eq ""
+}
+if ($ClassicContextMenuConfigured) {
+    $AlreadyLinked += "Windows 10 context menu"
+} else {
+    New-Item -Path $ClassicContextMenuKey -Force | Out-Null
+    Set-Item -LiteralPath $ClassicContextMenuKey -Value ""
+    $Created += "Windows 10 context menu (restart Explorer to apply)"
+}
+
+# Windows 11 26H2 introduced a new context-menu implementation that ignores the CLSID override.
+# Disable only those feature flags so Explorer falls back to the implementation controlled above.
+$WindowsBuild = [int](Get-ItemProperty -LiteralPath "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion").CurrentBuild
+if ($WindowsBuild -ge 26300) {
+    $ClassicContextMenuFeatureIds = @(49453572, 60813048, 61934903)
+    $ViVeToolCommand = Get-Command ViVeTool.exe, ViVeTool -ErrorAction SilentlyContinue | Select-Object -First 1
+    $ViVeToolPath = if ($ViVeToolCommand) { $ViVeToolCommand.Source } else {
+        Get-ChildItem -LiteralPath "$env:LOCALAPPDATA\Microsoft\WinGet\Packages" -Filter "ViVeTool.exe" -File -Recurse -ErrorAction SilentlyContinue |
+            Where-Object FullName -Match "thebookisclosed\.Vive" |
+            Select-Object -First 1 -ExpandProperty FullName
+    }
+
+    if (-not $ViVeToolPath) {
+        $Conflicts += "Windows 11 26H2 requires ViVeTool for the classic context menu; install winget package thebookisclosed.Vive"
+    } else {
+        $ClassicContextMenuFeaturesConfigured = $true
+        foreach ($FeatureId in $ClassicContextMenuFeatureIds) {
+            $FeatureState = & $ViVeToolPath /query "/id:$FeatureId" 2>&1 | Out-String
+            if ($LASTEXITCODE -ne 0 -or $FeatureState -notmatch "State\s*:\s*Disabled") {
+                $ClassicContextMenuFeaturesConfigured = $false
+                break
+            }
+        }
+
+        if ($ClassicContextMenuFeaturesConfigured) {
+            $AlreadyLinked += "Windows 11 26H2 classic context-menu feature overrides"
+        } else {
+            try {
+                # ViVeTool writes Windows feature configuration and therefore needs one-time elevation.
+                $FeatureArguments = "/disable /id:$($ClassicContextMenuFeatureIds -join ',')"
+                $ViVeToolProcess = Start-Process -FilePath $ViVeToolPath -ArgumentList $FeatureArguments -Verb RunAs -WindowStyle Hidden -Wait -PassThru
+                if ($ViVeToolProcess.ExitCode -ne 0) {
+                    throw "ViVeTool exited with code $($ViVeToolProcess.ExitCode)"
+                }
+                $Created += "Windows 11 26H2 classic context-menu feature overrides (restart Explorer to apply)"
+            } catch {
+                $Conflicts += "could not disable Windows 11 26H2 context-menu features: $($_.Exception.Message)"
+            }
+        }
+    }
+}
+
+# Older setup versions restarted Explorer after every sign-in, which can disrupt other Startup apps.
+$ClassicContextMenuStartup = [Environment]::GetFolderPath("Startup")
+$ClassicContextMenuShortcutPath = Join-Path $ClassicContextMenuStartup "ClassicContextMenuRefresh.lnk"
+if (Test-Path -LiteralPath $ClassicContextMenuShortcutPath -PathType Leaf) {
+    Remove-Item -LiteralPath $ClassicContextMenuShortcutPath -Force
+    $Created += "Removed obsolete Windows 10 context-menu sign-in refresh"
 }
 
 # Firefox reads user.js at startup; this works without policy-registry or Program Files access.

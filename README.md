@@ -30,18 +30,18 @@ Clone the repository anywhere, then run the PowerShell installer from the reposi
 ```powershell
 git clone git@github.com:triet228/.dotfiles.git "$HOME\Projects\.dotfiles"
 cd "$HOME\Projects\.dotfiles"
-.\setup-windows-symlinks.ps1
+powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\setup-windows-symlinks.ps1
 ```
 
 When adopting this configuration on a computer with existing files, use:
 
 ```powershell
-.\setup-windows-symlinks.ps1 -BackupExisting
+powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\setup-windows-symlinks.ps1 -BackupExisting
 ```
 
 Conflicting configurations are then moved into `~/.dotfiles-backup/windows/<timestamp>/`, retaining their paths relative to the home directory. Without this option, conflicts are reported and left alone. Existing correct links are left alone, identical regular files are replaced with links, and dangling links are repaired. Old hard links with different content are always backed up before migration.
 
-The installer derives the repository location from its own path. It creates directory junctions for configuration directories and, when Windows Developer Mode or elevation allows it, symbolic links for individual files. Otherwise it creates loader files for PowerShell, Vim, and lf, and copies the remaining settings. Loaders read directly from the checkout, so Git updates take effect without reinstalling. Copies are tracked in `~/.local/state/dotfiles/windows-copies.json` and refreshed on subsequent setup runs; locally edited copies are treated as conflicts. No administrator access is required for this fallback.
+The one-command bootstrap uses a process-only execution-policy bypass so the installer can run on a fresh Windows account, then configures Windows PowerShell 5.1 with the persistent per-user `RemoteSigned` policy required to load its profile. It also adds the same explicit policy to Windows Terminal's Windows PowerShell profile so a stale process-level policy cannot override the user setting. The installer derives the repository location from its own path. It creates directory junctions for configuration directories and, when Windows Developer Mode or elevation allows it, symbolic links for individual files. Otherwise it creates loader files for PowerShell, Vim, and lf, and copies the remaining settings. Loaders read directly from the checkout, so Git updates take effect without reinstalling. Copies are tracked in `~/.local/state/dotfiles/windows-copies.json` and refreshed on subsequent setup runs; locally edited copies are treated as conflicts. No administrator access is required for this fallback.
 
 It installs the profile for both PowerShell and Windows PowerShell, links Neovim's native configuration directory, and installs Windows-specific lf settings and previews under `%LOCALAPPDATA%\lf` without moving lf history or selection state. Linux desktop settings are not installed on Windows.
 
@@ -58,12 +58,14 @@ The profile detects Conda in common user and system locations, uses the installe
 The linker configures existing Windows applications. The profile supports Git for Windows, Neovim, Conda, lf, eza, fzf, zoxide, ripgrep, Delta, and Starship. Install the additional system-info, preview, fuzzy-search, and image-conversion tools for the current user with WinGet:
 
 ```powershell
-foreach ($id in 'Fastfetch-cli.Fastfetch', 'sharkdp.bat', 'sharkdp.fd', 'ImageMagick.Q16-HDRI') {
+foreach ($id in 'Fastfetch-cli.Fastfetch', 'sharkdp.bat', 'sharkdp.fd', 'ImageMagick.Q16-HDRI', 'thebookisclosed.Vive') {
     winget install --id $id --exact --source winget --scope user --silent --no-upgrade --accept-package-agreements --accept-source-agreements
 }
 ```
 
 The profile picks up newly added user PATH entries even when its parent terminal app is already running. Run `tools` to inspect command discovery. Fastfetch, bat, fd, and ImageMagick are used when available; previews and fuzzy file lookup still have fallbacks. Open a new terminal after setup to load the profile. After pulling, rerun setup to refresh any managed copies.
+
+Windows 11 26H2 replaced the context-menu implementation and ignores the older CLSID-only override. When needed, setup uses ViVeTool once with elevation to disable the three new context-menu features, allowing the persistent per-user registry override to restore the full classic menu. It also removes the obsolete Startup shortcut that restarted Explorer after every sign-in, because that restart could delay or disrupt other Startup applications.
 
 ## Updating
 
