@@ -6,7 +6,7 @@
         "Status": "locked"
       },
       "browser.startup.page": {
-        "Value": 3,
+        "Value": 1,
         "Status": "locked",
         "Type": "number"
       }

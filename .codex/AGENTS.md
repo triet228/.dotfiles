@@ -1,6 +1,6 @@
 - "commit": If previous task fails or needs external help, stop. Do not commit temp files. Otherwise, do git add . && git commit -m "<message>" && git push. <message> is specify with "commit <message>". Otherwise, summarize in less than 8 words. Only commit relevant files.
 
-- "git clean" means: git clean -xfd -e AGENTS.md
+- "git clean" means: git clean -xfd
 
 - Do not use type annotations (e.g., def add(x: int, y: int) -> int). Remove them if they already exist.
 
