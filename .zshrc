@@ -156,7 +156,7 @@ bindkey '^I' autosuggest-accept # Tab to accept suggestion
 
 # Navigation & Listing
 alias ll='eza -la --sort=ext --icons --group-directories-first --time-style=long-iso --git'
-alias ls='eza -l --sort=ext --icons --group-directories-first --time-style=long-iso --git --no-permissions --no-user'
+alias ls='eza --icons --tree --level=1 --group-directories-first'
 alias lss='eza --icons --tree --level=2 --group-directories-first'
 alias lsss='eza --icons --tree --level=3 --group-directories-first'
 alias lssss='eza --icons --tree --level=4 --group-directories-first'

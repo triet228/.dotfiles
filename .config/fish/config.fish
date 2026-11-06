@@ -15,7 +15,7 @@ if status is-interactive
     command -q direnv; and direnv hook fish | source
 
     alias ll='eza -la --sort=ext --icons --group-directories-first --time-style=long-iso --git'
-    alias ls='eza -l --sort=ext --icons --group-directories-first --time-style=long-iso --git --no-permissions --no-user'
+    alias ls='eza --icons --tree --level=1 --group-directories-first'
     for level in (seq 2 9)
         alias ls(string repeat -n (math $level - 1) s) "eza --icons --tree --level=$level --group-directories-first"
     end

@@ -288,7 +288,7 @@ function global:ls {
     if (Test-Command eza) {
         # An explicit directory also makes listings work when the shell's input is redirected.
         $ListArguments = if ($args.Count) { $args } else { @('.') }
-        eza -l --sort=ext --icons --group-directories-first --time-style=long-iso --git --no-permissions --no-user @ListArguments
+        eza --icons --tree --level=1 --group-directories-first @ListArguments
     } else {
         Get-ChildItem @args
     }
@@ -327,7 +327,14 @@ function global:cd {
     if ($?) { ls }
 }
 
+function global:Disable-CoreutilsLsRewrite {
+    # WinGet's Coreutils hook rewrites typed `ls` before PowerShell can resolve
+    # this profile's eza-backed function. Preserve its other command rewrites.
+    if ($script:__COREUTILS__) { [void]$script:__COREUTILS__.Remove("ls") }
+}
+
 function global:prompt {
+    Disable-CoreutilsLsRewrite
     $path = $ExecutionContext.SessionState.Path.CurrentLocation.Path.Replace($HOME, "~")
     $git = ""
     if (Get-Command git -ErrorAction SilentlyContinue) {
@@ -349,6 +356,7 @@ if ($InteractiveTerminal -and (Get-Command zoxide -ErrorAction SilentlyContinue)
 }
 
 function global:Invoke-Starship-PreCommand {
+    Disable-CoreutilsLsRewrite
     $leaf = Split-Path -Leaf (Get-Location)
     $Host.UI.RawUI.WindowTitle = if ($leaf) { $leaf } else { (Get-Location).Path }
 }
