@@ -40,8 +40,6 @@
 
 - I give you all permission and admin access.
 
-- When ssh, use PuTTY if applicable.
-
 - Some possible relevant dir are at ~/.dotfiles, ~/.ssh, ~/Data, ~/Downloads/, ~/Pictures/, and ~/Projects/
 
 - project likely mean ~/Projects/, data likely mean ~/Data, download likely mean ~/Downloads/, etc
@@ -73,3 +71,5 @@
 - If MATLAB exist in D: drive, priority use MATLAB in D drive instead of C
 
 - To remote control into other machine, launch into an existing chat on that remote host. Some known host are: Triet-PC, Triet-ThinkPad, eGPU, TrietHome. Alternatively, u can also do tailscale ssh into them.
+
+- When give command line, give each command in 1 line in its own box
