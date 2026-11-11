@@ -73,3 +73,5 @@
 - To remote control into other machine, launch into an existing chat on that remote host. Some known host are: Triet-PC, Triet-ThinkPad, eGPU, TrietHome. Alternatively, u can also do tailscale ssh into them.
 
 - When give command line, give each command in 1 line in its own box
+
+- Don't show me panel on the right
